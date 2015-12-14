@@ -1,0 +1,17 @@
+template:
+    url: https://github.com/CouscousPHP/Template-Light.git
+
+baseUrl: http://gnugat.github.io/micro-framework-bundle
+
+title: Symfony Micro Framework Bundle
+subTitle: Faster, lighter, better Symfony
+
+github:
+    user: gnugat
+    repo: micro-framework-bundle
+
+menu:
+    items:
+        home:
+            text: Home
+            relativeUrl:

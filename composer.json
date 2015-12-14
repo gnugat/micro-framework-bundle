@@ -1,0 +1,36 @@
+{
+    "name": "gnugat/micro-framework-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Symfony Micro Framework Bundle",
+    "keywords": ["symfony", "micro", "framework", "bundle"],
+    "homepage": "http://gnugat.github.io/micro-framework-bundle",
+    "authors": [
+        {
+            "name": "Loïc Faugeron",
+            "email": "faugeron.loic@gmail.com",
+            "homepage": "http://gnugat.github.io",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gnugat\\MicroFrameworkBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "files": [ "Tests/app/AppKernel.php" ]
+    },
+    "require": {
+        "php": "^5.5.9|^7.0",
+        "symfony/config": "^3.0",
+        "symfony/dependency-injection": "^3.0",
+        "symfony/http-kernel": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.6|^5.0"
+    }
+}
