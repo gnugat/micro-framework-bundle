@@ -13,7 +13,7 @@ namespace Gnugat\MicroFrameworkBundle\Tests;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class ThirdPartyBundleTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends \PHPUnit_Framework_TestCase
 {
     private $kernel;
 
@@ -26,20 +26,24 @@ class ThirdPartyBundleTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_can_load_bundle_services()
+    public function it_provides_event_dispatcher()
     {
-        self::assertTrue($this->kernel->getContainer()->has('app.my_service'));
+        self::assertTrue($this->kernel->getContainer()->has('event_dispatcher'));
     }
 
     /**
      * @test
      */
-    public function it_can_load_bundle_controllers()
+    public function it_provides_http_kernel()
     {
-        $request = Request::create('/?name=igor');
+        self::assertTrue($this->kernel->getContainer()->has('http_kernel'));
+    }
 
-        $response = $this->kernel->handle($request);
-
-        self::assertSame(200, $response->getStatusCode(), $response->getContent());
+    /**
+     * @test
+     */
+    public function it_provides_request_stack()
+    {
+        self::assertTrue($this->kernel->getContainer()->has('request_stack'));
     }
 }
