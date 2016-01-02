@@ -11,7 +11,7 @@ First install it using [Composer](https://getcomposer.org/download):
 
 Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
 
-    new Gnugat\MicroFrameworkBundle\MicroFrameworkBundle()
+    new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()
 
 ## Features
 
