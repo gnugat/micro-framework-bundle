@@ -1,6 +1,0 @@
-services:
-    app.my_controller:
-        class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Controller\MyController
-
-    app.my_service:
-        class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Service\MyService

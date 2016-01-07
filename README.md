@@ -1,33 +1,65 @@
-# Symfony Micro Framework Bundle
+---
+currentMenu: home
+---
+# Couscous Light template
 
-A replacement of the official FrameworkBundle allowing Symfony to be used as a
-micro-framework which follows the "add what you need" philosophy.
+![](screenshot.png)
 
-## Installation
+## Usage
 
-First install it using [Composer](https://getcomposer.org/download):
+To use the template, set it up in your `couscous.yml` configuration file:
 
-    composer require gnugat/micro-framework-bundle:^0.1
+```yaml
+template:
+    url: https://github.com/CouscousPHP/Template-Light
+```
 
-Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
+## Configuration
 
-    new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()
+Here are all the variables you can set in your `couscous.yml`:
 
-## Features
+```yaml
+# Base URL of the published website
+baseUrl: http://username.github.io/project
 
-* compatible with third party bundles
-* better performance than FrameworkBundle (faster autoloading, lighter DIC)
+# Used to link to the GitHub project
+github:
+    user: myself
+    repo: my-project
 
-## Want to know more?
+title: My project
+subTitle: This is a great project.
 
-You can see the current and past versions using one of the following:
+# The left menu bar
+menu:
+    items:
+        home:
+            text: Home page
+            # You can use relative urls
+            relativeUrl: doc/faq.html
+        foo:
+            text: Another link
+            # Or absolute urls
+            absoluteUrl: https://example.com
+```
 
-* the `git tag` command
-* the [releases page on Github](https://github.com/gnugat/micro-framework-bundle/releases)
-* the file listing the [changes between versions](CHANGELOG.md)
+Note that the menu items can also contain HTML:
 
-And finally some meta documentation:
+```yaml
+home:
+    text: "<i class=\"fa fa-github\"></i> Home page"
+    relativeUrl: doc/faq.html
+```
 
-* [copyright and MIT license](LICENSE)
-* [versioning and branching models](VERSIONING.md)
-* [contribution instructions](CONTRIBUTING.md)
+## Menu
+
+To set the current menu item (i.e. highlighted menu item), set the `currentMenu`
+key in the Markdown files:
+
+```markdown
+---
+currentMenu: home
+---
+
+# Welcome
+```
