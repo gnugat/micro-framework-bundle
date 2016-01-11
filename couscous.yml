@@ -15,3 +15,11 @@ menu:
         home:
             text: Home
             relativeUrl:
+
+        introduction:
+            text: Introduction
+            relativeUrl: doc/01-introduction.html
+
+        compatibility:
+            text: Compatibility
+            relativeUrl: doc/02-compatibility.html
