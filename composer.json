@@ -33,6 +33,7 @@
         "symfony/routing": "^3.0"
     },
     "require-dev": {
+        "league/tactician-bundle": "^0.4",
         "phpunit/phpunit": "^4.6|^5.0"
     }
 }

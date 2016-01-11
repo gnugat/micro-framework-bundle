@@ -11,11 +11,26 @@
 
 namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\Controller;
 
+use Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello;
+use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class MyController
 {
+    /**
+     * @var CommandBus
+     */
+    private $commandBus;
+
+    /**
+     * @param CommandBus $commandBus
+     */
+    public function __construct(CommandBus $commandBus)
+    {
+        $this->commandBus = $commandBus;
+    }
+
     /**
      * @param Request $request
      *
@@ -23,8 +38,10 @@ class MyController
      */
     public function helloWorld(Request $request)
     {
-        $name = $request->query->get('name', 'world');
+        $message = $this->commandBus->handle(new SayHello(
+            $request->query->get('name')
+        ));
 
-        return new Response("Hello $name!");
+        return new Response($message);
     }
 }

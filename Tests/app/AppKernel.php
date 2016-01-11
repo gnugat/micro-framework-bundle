@@ -22,6 +22,8 @@ class AppKernel extends Kernel
         return array(
             new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle(),
             new Gnugat\MicroFrameworkBundle\Tests\Bundle\GnugatThirdPartyBundle(),
+
+            new League\Tactician\Bundle\TacticianBundle(),
         );
     }
 

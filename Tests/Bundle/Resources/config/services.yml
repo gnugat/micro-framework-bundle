@@ -1,6 +1,14 @@
 services:
     app.my_controller:
         class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Controller\MyController
+        arguments:
+            - "@tactician.commandbus"
 
     app.my_service:
         class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Service\MyService
+
+    app.say_hello_handler:
+        class: Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHelloHandler
+        tags:
+            - { name: tactician.handler, command: Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello }
+
