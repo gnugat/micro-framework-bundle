@@ -34,6 +34,7 @@
     },
     "require-dev": {
         "league/tactician-bundle": "^0.4",
-        "phpunit/phpunit": "^4.6|^5.0"
+        "phpunit/phpunit": "^5.0",
+        "symfony/monolog-bundle": "^2.0"
     }
 }

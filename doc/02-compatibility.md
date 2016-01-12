@@ -24,6 +24,7 @@ Are they all compatible with `MicroFrameworkBundle`?
 First of all, here's a list of bundles `MicroFrameworkBundle` commits to support:
 
 * [league/tactician-bundle](https://tactician.thephpleague.com/)
+* [symfony/monolog-bundle](http://symfony.com/doc/current/cookbook/logging/monolog.html)
 
 These may change in the future.
 
@@ -136,4 +137,4 @@ compatible with `MicroFrameworkBundle` because of:
 * their tendency to try to solve 80% of most use cases, instead of following a "add what you need" philosophy
 
 Good bundle candidates would be ones that integrate a library into Symfony's
-Dependency Injection Container, for example [symfony/monolog-bundle](http://symfony.com/doc/current/cookbook/logging/monolog.html).
+Dependency Injection Container, for example `symfony/monolog-bundle`.

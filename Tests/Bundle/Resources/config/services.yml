@@ -9,6 +9,8 @@ services:
 
     app.say_hello_handler:
         class: Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHelloHandler
+        arguments:
+            - "@logger"
         tags:
             - { name: tactician.handler, command: Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello }
-
+            - { name: monolog.logger }

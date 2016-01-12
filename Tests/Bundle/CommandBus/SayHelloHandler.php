@@ -11,8 +11,23 @@
 
 namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus;
 
+use Psr\Log\LoggerInterface;
+
 class SayHelloHandler
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @param SayHello $sayHello
      *
@@ -20,6 +35,10 @@ class SayHelloHandler
      */
     public function handle(SayHello $sayHello)
     {
+        $this->logger->debug('Said hello', array(
+            'name' => $sayHello->name,
+        ));
+
         return "Hello {$sayHello->name}!";
     }
 }
