@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Symfony Micro Framework Bundle</title>
+
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gnugat.github.io/micro-framework-bundle/">
+                Symfony Micro Framework Bundle
+                <small class="hidden-xs hidden-sm">
+                    Faster, lighter, better Symfony
+                </small>
+            </a>
+
+                            <a href="https://github.com/gnugat/micro-framework-bundle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/">
+                                        Home
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-introduction.html">
+                                        Introduction
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/02-compatibility.html">
+                                        Compatibility
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="compatibility">Compatibility</h1>
+<blockquote>
+<p><strong>TL;DR</strong>: Bundles that only integrate libraries are recommended.</p>
+</blockquote>
+<p><a href="http://symfony.com">Symfony</a> has a large community which is very keen at contributing,
+resulting in a considerable number of bundles.</p>
+<p>Those usually embed any of the following:</p>
+<ul>
+<li>Controllers, along with their routing configuration</li>
+<li>Commands</li>
+<li>DependencyInjection configuration, including CompilerPass</li>
+<li>EventListeners</li>
+</ul>
+<p>They can also include resources such as templates, assets and schema.</p>
+<p>Are they all compatible with <code>MicroFrameworkBundle</code>?</p>
+<blockquote>
+<p><strong>Note</strong>: To find Symfony bundles, have a look at <a href="http://knpbundles.com/">knpbundles</a>
+or <a href="https://packagist.org/search/?q=Symfony%20Bundle">packagist</a>.</p>
+</blockquote>
+<h2 id="officially-supported-bundles">Officially Supported Bundles</h2>
+<p>First of all, here's a list of bundles <code>MicroFrameworkBundle</code> commits to support:</p>
+<ul>
+<li><a href="https://tactician.thephpleague.com/">league/tactician-bundle</a></li>
+<li><a href="http://symfony.com/doc/current/cookbook/logging/monolog.html">symfony/monolog-bundle</a></li>
+</ul>
+<p>These may change in the future.</p>
+<h2 id="criterias-of-compatibility">Criterias of compatibility</h2>
+<p><code>MicroFrameworkBundle</code> has a highly opinionated take on third party bundles:
+it expects them to be &quot;micro bundles&quot;.
+This would typically be bundles registering a third party library services into
+the Dependency Injection Container.</p>
+<blockquote>
+<p><strong>Note</strong>: Most bundles specify <code>symfony/framework-bundle</code> as a composer dependecy,
+when they could instead specify only the components they actually depend on.</p>
+<p>They might still be compatible with <code>MicroFrameworkBundle</code> (but they'll download
+<code>symfony/framework-bundle</code> and add its classes to the autoloader).</p>
+<p>This could be solved by contributing to them. Here's an example:</p>
+<ul>
+<li>an empty bundle only requires the <code>symfony/http-kernel</code> and <code>symfony/dependency-injection</code></li>
+<li>a bundle providing Event Listeners only requires <code>symfony/event-dispacther</code></li>
+<li>a bundle embeding YAML configuration only requires <code>symfony/yaml</code></li>
+</ul>
+</blockquote>
+<p>In the net sub-sections we're going to review <code>FrameworkBundle</code> specific features
+that third party bundles might depend on, and see how this can affect compatibility
+as well as how to fix it.</p>
+<h3 id="annotations">Annotations</h3>
+<p><code>MicroFrameworkBundle</code> doesn't provide support for annotations, but it doesn't
+make bundles that use them incompatible:</p>
+<ol>
+<li>register an implementation of <code>Doctrine\Common\Annotations\Reader</code> as a service named <code>annotation_reader</code></li>
+<li>register <code>AnnotationLoader</code> for the related components (e.g. Validator, Routing, Serializer, etc)</li>
+</ol>
+<p>While their main strength is to reduce the distance between configuration and code
+as well as enabling AOP, annotations aren't supported here because they tightly
+couple application code with third party libraries.</p>
+<p>We'd recommend to switch to another configuration format.</p>
+<h3 id="controllers-and-routings">Controllers and Routings</h3>
+<p><code>MicroFrameworkBundle</code> forces applications to configure their controller as services,
+since it's the only routing configuration format it supports.</p>
+<p>Third party bundles that provide controllers are excluded from the &quot;micro bundle&quot;
+category as it might indicate that they try to solve too many use cases.</p>
+<p>Those bundles might still be compatible and their controllers might be or might
+not be able to be registered.</p>
+<blockquote>
+<p><strong>Note</strong>: <code>FrameworkBundle</code> prodives a Base Controller that contains shortcut
+methods.
+By creating instead a controller as a service, we make its dependencies explicit.
+If there's many of them, the controller might do too much work (it should only be a glue)
+or it might needs to be split.</p>
+</blockquote>
+<h3 id="debug-toolbar-and-profiler">Debug Toolbar and Profiler</h3>
+<p>The debug toolbar isn't embeded provided by <code>MicroFrameworkBundle</code> as it would
+add a dependency on frontend tools.</p>
+<p>It is still possible to install it by registering <code>DataCollectors</code> as well as the
+<code>Profiler</code>.</p>
+<blockquote>
+<p><strong>Note</strong>: The <code>Debug</code> component is still present as it is a <code>HttpKernel</code> dependency.</p>
+</blockquote>
+<h3 id="httpcache">HttpCache</h3>
+<p>No extensions for HttpCache are provided and ESI/fragements are not registered.</p>
+<h3 id="console">Console</h3>
+<p><code>FrameworkBundle</code> prodives a <code>ContainerAwareCommand</code>. Any bundle providing
+commands that extend it won't be compatible with <code>MicroFrameworkBundle</code>.</p>
+<p>We recommend to register those commands as services instead, as they will be
+supported in the future by <code>MicroFrameworkBundle</code>.</p>
+<p>Finally, <code>FrameworkBundle</code> provides its own Console <code>Application</code> that wraps the
+Kernel to access its registered bundles. This is planned to be supported.</p>
+<h3 id="missing-dependencies">Missing Dependencies</h3>
+<p>To follow the &quot;add what you need&quot; micro framework philosohpy, there are many components
+present in <code>FrameworkBundle</code> that are absent from <code>MicroFrameworkBundle</code>:</p>
+<ul>
+<li><code>symfony/asset</code></li>
+<li><code>symfony/finder</code></li>
+<li><code>symfony/security-core</code></li>
+<li><code>symfony/security-csrf</code></li>
+<li><code>symfony/stopwatch</code></li>
+<li><code>symfony/templating</code></li>
+<li><code>symfony/translation</code></li>
+</ul>
+<p>No configuration is provided for <code>FrameworkBundle</code> &quot;optional&quot; dependencies:</p>
+<ul>
+<li><code>symfony/browser-kit</code></li>
+<li><code>symfony/expression-language</code></li>
+<li><code>symfony/form</code></li>
+<li><code>symfony/process</code></li>
+<li><code>symfony/property-access</code></li>
+<li><code>symfony/property-info</code></li>
+<li><code>symfony/security</code></li>
+<li><code>symfony/serializer</code></li>
+<li><code>symfony/validator</code></li>
+</ul>
+<p>Finally, some third party libraries have also been removed:</p>
+<ul>
+<li><code>doctrine/annotations</code></li>
+<li><code>doctrine/cache</code></li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>A micro framework requires micro bundles. Most third party bundles might not be
+compatible with <code>MicroFrameworkBundle</code> because of:</p>
+<ul>
+<li>their hard dependency on <code>FrameworkBundle</code> specific classes (<code>Controller</code>, <code>ContainerAwareCommand</code>, etc)</li>
+<li>their tendency to try to solve 80% of most use cases, instead of following a &quot;add what you need&quot; philosophy</li>
+</ul>
+<p>But with a bit of work they can be used.</p>
+<p>Good bundle candidates would be ones that simply integrate a library into Symfony's
+Dependency Injection Container, for example <code>symfony/monolog-bundle</code>.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
