@@ -31,41 +31,64 @@ These may change in the future.
 ## Criterias of compatibility
 
 `MicroFrameworkBundle` has a highly opinionated take on third party bundles:
-it expects them to be "micro bundles", meaning:
+it expects them to be "micro bundles".
+This would typically be bundles registering a third party library services into
+the Dependency Injection Container.
 
-* an empty bundle only requires the `symfony/http-kernel` and `symfony/dependency-injection` composer packages
-* a bundle providing Event Listeners should also depend on `symfony/event-dispacther`
-* a bundle embeding YAML configuration should finally depend on `symfony/yaml`
+> **Note**: Most bundles specify `symfony/framework-bundle` as a composer dependecy,
+> when they could instead specify only the components they actually depend on.
+>
+> They might still be compatible with `MicroFrameworkBundle` (but they'll download
+> `symfony/framework-bundle` and add its classes to the autoloader).
+>
+> This could be solved by contributing to them. Here's an example:
+>
+> * an empty bundle only requires the `symfony/http-kernel` and `symfony/dependency-injection`
+> * a bundle providing Event Listeners only requires `symfony/event-dispacther`
+> * a bundle embeding YAML configuration only requires `symfony/yaml`
 
-Most bundles specify a hard dependency on the `symfony/framework-bundle` composer package
-meaning that a vast majority of bundles aren't compatible, including the so-called
-[30 Most Useful Symfony Bundles](http://symfony.com/blog/the-30-most-useful-symfony-bundles-and-making-them-even-better).
+In the net sub-sections we're going to review `FrameworkBundle` specific features
+that third party bundles might depend on, and see how this can affect compatibility
+as well as how to fix it.
 
-This limitation could be leveraged by contributing to these bundes and replacing
-their hard dependency by the components they're actually depending on.
+### Annotations
 
-However there is another limitation, some bundles actually rely on FrameworkBundle.
+`MicroFrameworkBundle` doesn't provide support for annotations, but it doesn't
+make bundles that use them incompatible:
 
-### Base Controller
+1. register an implementation of `Doctrine\Common\Annotations\Reader` as a service named `annotation_reader`
+2. register `AnnotationLoader` for the related components (e.g. Validator, Routing, Serializer, etc)
 
-`FrameworkBundle` prodives a Base Controller. Any bundle providing controllers that
-extend it won't be compatible with `MicroFrameworkBundle`.
+While their main strength is to reduce the distance between configuration and code
+as well as enabling AOP, annotations aren't supported here because they tightly
+couple application code with third party libraries.
 
-Base Controllers provide shortcut methods for different responsibilities (from
-routing to security, alongside with templates and forms). Those can easily be
-implemented directly in a controller ([have a look](https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php)).
+We'd recommend to switch to another configuration format.
 
-By creating instead a controller as a service, we make explicit its dependencies.
-If there's many of them, the controller might do too much work (it should only be a glue)
-or it might needs to be split.
+### Controllers and Routings
 
-To make them compatible again, those controllers should be converted to services.
+`MicroFrameworkBundle` forces applications to configure their controller as services,
+since it's the only routing configuration format it supports.
+
+Third party bundles that provide controllers are excluded from the "micro bundle"
+category as it might indicate that they try to solve too many use cases.
+
+Those bundles might still be compatible and their controllers might be or might
+not be able to be registered.
+
+> **Note**: `FrameworkBundle` prodives a Base Controller that contains shortcut
+> methods.
+> By creating instead a controller as a service, we make its dependencies explicit.
+> If there's many of them, the controller might do too much work (it should only be a glue)
+> or it might needs to be split.
 
 ### Debug Toolbar and Profiler
 
-Since the debug toolbar is mainly usefull on fullstack websites, it isn't embeded
-in `MicroFrameworkBundle`. This means that none of the `DataCollectors` are registered,
-and the `Profiler` is disabled.
+The debug toolbar isn't embeded provided by `MicroFrameworkBundle` as it would
+add a dependency on frontend tools.
+
+It is still possible to install it by registering `DataCollectors` as well as the
+`Profiler`.
 
 > **Note**: The `Debug` component is still present as it is a `HttpKernel` dependency.
 
@@ -75,28 +98,14 @@ No extensions for HttpCache are provided and ESI/fragements are not registered.
 
 ### Console
 
-Most console features are currently absent from `MicroFrameworkBundle`.
-
-#### Container Aware Command
-
-`FrameworkBundle` also prodives a Container Aware Command. Any bundle providing
+`FrameworkBundle` prodives a `ContainerAwareCommand`. Any bundle providing
 commands that extend it won't be compatible with `MicroFrameworkBundle`.
 
-As for controllers, we should make dependencies explicit for commands.
+We recommend to register those commands as services instead, as they will be
+supported in the future by `MicroFrameworkBundle`.
 
-To make them compatible again, those commands should be converted to services.
-
-#### Commands as a service
-
-`FrameworkBundle` provides a compiler pass to register commands as a service.
-
-This might be supported in the future.
-
-#### Console Application
-
-`FrameworkBundle` provides a Console Application that works with the Kernel and bundles.
-
-This might be supported in the future.
+Finally, `FrameworkBundle` provides its own Console `Application` that wraps the
+Kernel to access its registered bundles. This is planned to be supported.
 
 ### Missing Dependencies
 
@@ -130,11 +139,13 @@ Finally, some third party libraries have also been removed:
 
 ## Conclusion
 
-A micro framework requires micro bundles. Most third party bundles won't be
+A micro framework requires micro bundles. Most third party bundles might not be
 compatible with `MicroFrameworkBundle` because of:
 
 * their hard dependency on `FrameworkBundle` specific classes (`Controller`, `ContainerAwareCommand`, etc)
 * their tendency to try to solve 80% of most use cases, instead of following a "add what you need" philosophy
 
-Good bundle candidates would be ones that integrate a library into Symfony's
+But with a bit of work they can be used.
+
+Good bundle candidates would be ones that simply integrate a library into Symfony's
 Dependency Injection Container, for example `symfony/monolog-bundle`.
