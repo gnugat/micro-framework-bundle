@@ -1,7 +1,6 @@
 # Introduction
 
-> **TD;DR**: [Symfony](http://symfony.com) has always been able to be used as a micro
-> framework.
+> **TD;DR**: [Symfony](http://symfony.com) has always been able to be used as a micro framework.
 > For more "add what you need" micro-framework like spirit, use the [Empty Edition](http://github.com/gnugat/symfony-empty-edition)
 > and the [MicroFrameworkBundle](http://github.com/gnugat/micro-framework-bundle).
 

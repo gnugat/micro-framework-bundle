@@ -22,6 +22,9 @@ class AppKernel extends Kernel
         return array(
             new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle(),
             new Gnugat\MicroFrameworkBundle\Tests\Bundle\GnugatThirdPartyBundle(),
+
+            new League\Tactician\Bundle\TacticianBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
         );
     }
 
@@ -30,5 +33,6 @@ class AppKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        $loader->load($this->rootDir.'/config/config.yml');
     }
 }

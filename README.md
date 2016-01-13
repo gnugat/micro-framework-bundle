@@ -15,8 +15,13 @@ Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
 
 ## Features
 
-* compatible with third party bundles
-* better performance than FrameworkBundle (faster autoloading, lighter DIC)
+* micro framework spirit, including:
+    * "add what you need" philosohpy
+    * few dependencies
+    * small API
+    * small footprint for better performance
+    * [more information](doc/01-introduction.md)
+* compatible with most third party bundles, [more information](doc/02-compatibility.md)
 
 ## Want to know more?
 
