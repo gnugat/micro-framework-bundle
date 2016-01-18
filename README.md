@@ -36,3 +36,6 @@ And finally some meta documentation:
 * [copyright and MIT license](LICENSE)
 * [versioning and branching models](VERSIONING.md)
 * [contribution instructions](CONTRIBUTING.md)
+
+> **Note**: Some logic has been taken from Symfony FrameworkBundle and modified,
+> all attributions go to Fabien Potencier and the contributors.
