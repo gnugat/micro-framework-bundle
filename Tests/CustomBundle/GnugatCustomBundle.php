@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Tests\Bundle;
+namespace Gnugat\MicroFrameworkBundle\Tests\CustomBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class GnugatThirdPartyBundle extends Bundle
+class GnugatCustomBundle extends Bundle
 {
 }

@@ -21,8 +21,11 @@ class AppKernel extends Kernel
     {
         return array(
             new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle(),
-            new Gnugat\MicroFrameworkBundle\Tests\Bundle\GnugatThirdPartyBundle(),
 
+            // CustomBundle, similar to your AppBundle
+            new Gnugat\MicroFrameworkBundle\Tests\CustomBundle\GnugatCustomBundle(),
+
+            // Officially supported third party bundles
             new League\Tactician\Bundle\TacticianBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
         );

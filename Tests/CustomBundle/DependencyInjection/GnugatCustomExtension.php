@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\DependencyInjection;
+namespace Gnugat\MicroFrameworkBundle\Tests\CustomBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class GnugatThirdPartyExtension extends Extension
+class GnugatCustomExtension extends Extension
 {
     /**
      * {@inheritdoc}
