@@ -1,0 +1,2 @@
+third_party:
+    resource: "@GnugatCustomBundle/Resources/config/routings.yml"

@@ -11,7 +11,7 @@
 
 namespace Gnugat\MicroFrameworkBundle\Tests;
 
-use Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello;
+use Gnugat\MicroFrameworkBundle\Tests\CustomBundle\CommandBus\SayHello;
 use Symfony\Component\HttpFoundation\Request;
 
 class TacticianBundleTest extends \PHPUnit_Framework_TestCase

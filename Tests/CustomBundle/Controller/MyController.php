@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\Controller;
+namespace Gnugat\MicroFrameworkBundle\Tests\CustomBundle\Controller;
 
-use Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello;
+use Gnugat\MicroFrameworkBundle\Tests\CustomBundle\CommandBus\SayHello;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

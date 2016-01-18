@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\Service;
+namespace Gnugat\MicroFrameworkBundle\Tests\CustomBundle\Service;
 
 class MyService
 {

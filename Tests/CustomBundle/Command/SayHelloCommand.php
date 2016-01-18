@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Tests\Bundle\Command;
+namespace Gnugat\MicroFrameworkBundle\Tests\CustomBundle\Command;
 
-use Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello;
+use Gnugat\MicroFrameworkBundle\Tests\CustomBundle\CommandBus\SayHello;
 use League\Tactician\CommandBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
