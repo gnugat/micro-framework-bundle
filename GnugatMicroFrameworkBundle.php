@@ -11,6 +11,7 @@
 
 namespace Gnugat\MicroFrameworkBundle;
 
+use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\ConsoleCommandCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\RoutingResolverCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -26,6 +27,7 @@ class GnugatMicroFrameworkBundle extends Bundle
     {
         parent::build($container);
 
+        $container->addCompilerPass(new ConsoleCommandCompilerPass());
         $container->addCompilerPass(new RoutingResolverCompilerPass());
         $container->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
     }

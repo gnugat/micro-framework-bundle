@@ -4,6 +4,13 @@ services:
         arguments:
             - "@tactician.commandbus"
 
+    app.say_hello_command:
+        class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Command\SayHelloCommand
+        arguments:
+            - "@tactician.commandbus"
+        tags:
+            - { name: console.command }
+
     app.my_service:
         class: Gnugat\MicroFrameworkBundle\Tests\Bundle\Service\MyService
 
