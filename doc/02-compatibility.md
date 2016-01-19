@@ -44,17 +44,17 @@ the Dependency Injection Container.
 > This could be solved by contributing to them. Here's an example:
 >
 > * an empty bundle only requires the `symfony/http-kernel` and `symfony/dependency-injection`
-> * a bundle providing Event Listeners only requires `symfony/event-dispacther`
-> * a bundle embeding YAML configuration only requires `symfony/yaml`
+> * a bundle providing Event Listeners also requires `symfony/event-dispacther`
+> * a bundle embeding YAML configuration also requires `symfony/yaml`
 
-In the net sub-sections we're going to review `FrameworkBundle` specific features
+In the next sub-sections we're going to review `FrameworkBundle` specific features
 that third party bundles might depend on, and see how this can affect compatibility
 as well as how to fix it.
 
 ### Annotations
 
-`MicroFrameworkBundle` doesn't provide support for annotations, but it doesn't
-make bundles that use them incompatible:
+`MicroFrameworkBundle` doesn't provide support for annotations, but by manually
+setting up we can still be compatible with bundles that use this configuration format:
 
 1. register an implementation of `Doctrine\Common\Annotations\Reader` as a service named `annotation_reader`
 2. register `AnnotationLoader` for the related components (e.g. Validator, Routing, Serializer, etc)

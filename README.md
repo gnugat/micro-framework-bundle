@@ -13,15 +13,17 @@ Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
 
     new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()
 
+[More information](doc/01-installation.html)
+
 ## Features
 
+* compatible with most third party bundles, [more information](doc/02-compatibility.md)
 * micro framework spirit, including:
     * "add what you need" philosohpy
     * few dependencies
     * small API
     * small footprint for better performance
-    * [more information](doc/01-introduction.md)
-* compatible with most third party bundles, [more information](doc/02-compatibility.md)
+    * [more information](doc/03-benchmark.md)
 
 ## Want to know more?
 
