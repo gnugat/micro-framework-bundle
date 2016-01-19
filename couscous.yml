@@ -16,10 +16,14 @@ menu:
             text: Home
             relativeUrl:
 
-        introduction:
-            text: Introduction
-            relativeUrl: doc/01-introduction.html
+        installation:
+            text: Installation
+            relativeUrl: doc/01-installation.html
 
         compatibility:
             text: Compatibility
             relativeUrl: doc/02-compatibility.html
+
+        introduction:
+            text: Benchmark
+            relativeUrl: doc/03-benchmark.html
