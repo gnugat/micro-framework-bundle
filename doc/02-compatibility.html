@@ -41,13 +41,18 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-introduction.html">
-                                        Introduction
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-installation.html">
+                                        Installation
                                     </a>
                                 </li>
                                                             <li class="">
                                     <a href="http://gnugat.github.io/micro-framework-bundle/doc/02-compatibility.html">
                                         Compatibility
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                        Benchmark
                                     </a>
                                 </li>
                                                     </ul>
@@ -95,16 +100,16 @@ when they could instead specify only the components they actually depend on.</p>
 <p>This could be solved by contributing to them. Here's an example:</p>
 <ul>
 <li>an empty bundle only requires the <code>symfony/http-kernel</code> and <code>symfony/dependency-injection</code></li>
-<li>a bundle providing Event Listeners only requires <code>symfony/event-dispacther</code></li>
-<li>a bundle embeding YAML configuration only requires <code>symfony/yaml</code></li>
+<li>a bundle providing Event Listeners also requires <code>symfony/event-dispacther</code></li>
+<li>a bundle embeding YAML configuration also requires <code>symfony/yaml</code></li>
 </ul>
 </blockquote>
-<p>In the net sub-sections we're going to review <code>FrameworkBundle</code> specific features
+<p>In the next sub-sections we're going to review <code>FrameworkBundle</code> specific features
 that third party bundles might depend on, and see how this can affect compatibility
 as well as how to fix it.</p>
 <h3 id="annotations">Annotations</h3>
-<p><code>MicroFrameworkBundle</code> doesn't provide support for annotations, but it doesn't
-make bundles that use them incompatible:</p>
+<p><code>MicroFrameworkBundle</code> doesn't provide support for annotations, but by manually
+setting up we can still be compatible with bundles that use this configuration format:</p>
 <ol>
 <li>register an implementation of <code>Doctrine\Common\Annotations\Reader</code> as a service named <code>annotation_reader</code></li>
 <li>register <code>AnnotationLoader</code> for the related components (e.g. Validator, Routing, Serializer, etc)</li>

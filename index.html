@@ -41,13 +41,18 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-introduction.html">
-                                        Introduction
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-installation.html">
+                                        Installation
                                     </a>
                                 </li>
                                                             <li class="">
                                     <a href="http://gnugat.github.io/micro-framework-bundle/doc/02-compatibility.html">
                                         Compatibility
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                        Benchmark
                                     </a>
                                 </li>
                                                     </ul>
@@ -61,20 +66,21 @@
 micro-framework which follows the &quot;add what you need&quot; philosophy.</p>
 <h2 id="installation">Installation</h2>
 <p>First install it using <a href="https://getcomposer.org/download">Composer</a>:</p>
-<pre><code>composer require gnugat/micro-framework-bundle:^0.2</code></pre>
+<pre><code>composer require gnugat/micro-framework-bundle:^0.3</code></pre>
 <p>Then enable it in your application's kernel (e.g. <code>app/AppKernel.php</code>):</p>
 <pre><code>new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()</code></pre>
+<p><a href="doc/01-installation.html">More information</a></p>
 <h2 id="features">Features</h2>
 <ul>
+<li>compatible with most third party bundles, <a href="doc/02-compatibility.html">more information</a></li>
 <li>micro framework spirit, including:
 <ul>
 <li>&quot;add what you need&quot; philosohpy</li>
 <li>few dependencies</li>
 <li>small API</li>
 <li>small footprint for better performance</li>
-<li><a href="doc/01-introduction.html">more information</a></li>
+<li><a href="doc/03-benchmark.html">more information</a></li>
 </ul></li>
-<li>compatible with most third party bundles, <a href="doc/02-compatibility.html">more information</a></li>
 </ul>
 <h2 id="want-to-know-more">Want to know more?</h2>
 <p>You can see the current and past versions using one of the following:</p>
@@ -89,6 +95,10 @@ micro-framework which follows the &quot;add what you need&quot; philosophy.</p>
 <li><a href="versioning.html">versioning and branching models</a></li>
 <li><a href="contributing.html">contribution instructions</a></li>
 </ul>
+<blockquote>
+<p><strong>Note</strong>: Some logic has been taken from Symfony FrameworkBundle and modified,
+all attributions go to Fabien Potencier and the contributors.</p>
+</blockquote>
                 </section>
 
             </div>

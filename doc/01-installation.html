@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Symfony Micro Framework Bundle</title>
+
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gnugat.github.io/micro-framework-bundle/">
+                Symfony Micro Framework Bundle
+                <small class="hidden-xs hidden-sm">
+                    Faster, lighter, better Symfony
+                </small>
+            </a>
+
+                            <a href="https://github.com/gnugat/micro-framework-bundle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/">
+                                        Home
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-installation.html">
+                                        Installation
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/02-compatibility.html">
+                                        Compatibility
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                        Benchmark
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="installation">Installation</h1>
+<p><code>MicroFrameworkBundle</code> can be installed in new applications as well as existing
+ones.</p>
+<p>We're going to review first the Empty Edition, then the Standard Edition and
+we'll see what we need to consider for existing applications.</p>
+<h2 id="empty-edition">Empty Edition</h2>
+<p><a href="http://symfony.com">Symfony</a> applications can be created using distributions,
+for example the <a href="http://github.com/gnugat/symfony-empty-edition">Empty Edition</a>:</p>
+<pre><code>composer create-project gnugat/symfony-empty-edition
+cd symfony-empty-edition</code></pre>
+<p>Then we need to replace <code>FrameworkBundle</code> by <code>MicroFrameworkBundle</code>, first in the
+composer dependencies:</p>
+<pre><code>composer require 'gnugat/micro-framework-bundle'
+composer remove --update-with-dependencies 'symfony/framework-bundle'</code></pre>
+<p>Then in the <code>app/AppKernel.php</code> file by replacing <code>Symfony\Bundle\FrameworkBundle\FrameworkBundle</code>
+with <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code>.</p>
+<p>Next, the <code>framework</code> configuration key needs to be removed from <code>app/config/config.yml</code>.</p>
+<p>Finally, in the <code>bin/console</code> file
+replace <code>Symfony\Bundle\FrameworkBundle\Console\Application</code>
+with <code>Gnugat\MicroFrameworkBundle\Console\KernelApplication as Application</code>.</p>
+<h2 id="standard-edition">Standard Edition</h2>
+<p>The <a href="https://github.com/symfony/symfony-standard">Standard Edition</a> provides some
+pre-installed libraries:</p>
+<pre><code>composer create-project symfony/framework-standard-edition
+cd framework-standard-edition
+composer require 'gnugat/micro-framework-bundle'</code></pre>
+<p>Then we need to clean <code>app/AppKernel.php</code> file by removing the bundles following:</p>
+<ul>
+<li><code>Symfony\Bundle\FrameworkBundle\FrameworkBundle</code></li>
+<li><code>Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</code> (depends on annotations)</li>
+<li><code>Symfony\Bundle\TwigBundle\TwigBundle</code> (depends on assets)</li>
+<li><code>Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</code> (depends on data collectors)</li>
+</ul>
+<p>Don't forget to add <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code>.</p>
+<p>Next remove configuration for the following keys in <code>app/config/config*.yml</code>:</p>
+<ul>
+<li><code>framework</code></li>
+<li><code>web_profiler</code></li>
+<li><code>twig</code></li>
+</ul>
+<p>Extra steps are required for routing:</p>
+<ol>
+<li>create a <code>app/config/routings</code> directory</li>
+<li>move <code>app/config/routing.yml</code> to <code>app/config/routings/app.yml</code></li>
+<li>switch from annotation to YAML routing configuration in <code>app/config/routings/app.yml</code>:
+<pre><code>homepage:
+path: /
+defaults:
+    _controller: app.default_controller:indexAction
+methods:
+    - GET</code></pre></li>
+<li>configure <code>AppBundle\Controller\DefaultController</code> as a service in <code>app/config/services.yml</code>:
+<pre><code>services:
+    app.default_controller:
+        class: AppBundle\Controller\DefaultController</code></pre></li>
+<li>
+<p>remove <code>FrameworkBundle</code> classes from <code>src/AppBundle/Controller/DefaultController.php</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace AppBundle\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DefaultController
+{
+    public function indexAction(Request $request)
+    {
+        return new Response('Hello world');
+    }
+}</code></pre>
+</li>
+<li>remove <code>app/config/routing_dev.yml</code></li>
+</ol>
+<p>Finally, in the <code>bin/console</code> file
+replace <code>Symfony\Bundle\FrameworkBundle\Console\Application</code>
+with <code>Gnugat\MicroFrameworkBundle\Console\KernelApplication as Application</code>.</p>
+<blockquote>
+<p><strong>Note</strong>: Since <code>symfony/symfony</code> is specified as a requirement in <code>composer.json</code>,
+<code>FrameworkBundle</code> and the removed bundles are still present in the vendors.
+To get rid of them, specificy instead the actual list of component and bundles.</p>
+</blockquote>
+<h2 id="existing-applications">Existing Applications</h2>
+<p>Replacing <code>FrameworkBundle</code> with <code>MicroFrameworkBundle</code> might be tricky. Here's
+a small guide on how to do so.</p>
+<p>The first step is to make sure everything is saved, in case we might need to rollback.
+With git we can commit everything or statsh them.</p>
+<p>Then we need to install the bundle:</p>
+<pre><code>composer require 'gnugat/micro-framework-bundle'</code></pre>
+<p>And register it in <code>app/AppKernel.php</code> by replacing <code>FrameworkBundle</code>.</p>
+<p>The next steps are iterations of &quot;try and debug&quot;:</p>
+<ol>
+<li>remove the cache <code>rm -rf var/cache</code></li>
+<li>try to run the console: <code>bin/console</code></li>
+<li>try to browse pages</li>
+<li>run your tests</li>
+</ol>
+<p>If any step fails, then:</p>
+<ul>
+<li>check if there's any configuration to remove</li>
+<li>check if it's a bundle issue and if so if we can remove it</li>
+</ul>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
