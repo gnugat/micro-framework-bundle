@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.0: Console
+
+* added support for `console.command` tag
+* added `KernelApplication`
+
 ## 0.2.0: Supported Bundles
 
 * added support for `league/tactician-bundle`
