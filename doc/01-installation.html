@@ -80,16 +80,17 @@ with <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code>.</p>
 <p>Next, the <code>framework</code> configuration key needs to be removed from <code>app/config/config.yml</code>.</p>
 <p>Finally, in the <code>bin/console</code> file
 replace <code>Symfony\Bundle\FrameworkBundle\Console\Application</code>
-with <code>Gnugat\MicroFrameworkBundle\Console\KernelApplication as Application</code>.</p>
+with <code>Gnugat\MicroFrameworkBundle\Service\KernelApplication as Application</code>.</p>
 <h2 id="standard-edition">Standard Edition</h2>
-<p>The <a href="https://github.com/symfony/symfony-standard">Standard Edition</a> provides some
-pre-installed libraries:</p>
+<p>There's an official distribution: <a href="https://github.com/symfony/symfony-standard">Standard Edition</a>.
+It provides pre-installed libraries, but it can be installed in the same manner:</p>
 <pre><code>composer create-project symfony/framework-standard-edition
 cd framework-standard-edition
 composer require 'gnugat/micro-framework-bundle'</code></pre>
-<p>Then we need to clean <code>app/AppKernel.php</code> file by removing the bundles following:</p>
+<p>Then we need to clean <code>app/AppKernel.php</code> file by removing the following bundles:</p>
 <ul>
 <li><code>Symfony\Bundle\FrameworkBundle\FrameworkBundle</code></li>
+<li><code>Doctrine\Bundle\DoctrineBundle\DoctrineBundle</code> (depends on FrameworkBundle specific console Application)</li>
 <li><code>Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</code> (depends on annotations)</li>
 <li><code>Symfony\Bundle\TwigBundle\TwigBundle</code> (depends on assets)</li>
 <li><code>Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</code> (depends on data collectors)</li>
@@ -98,6 +99,7 @@ composer require 'gnugat/micro-framework-bundle'</code></pre>
 <p>Next remove configuration for the following keys in <code>app/config/config*.yml</code>:</p>
 <ul>
 <li><code>framework</code></li>
+<li><code>doctrine</code> (as well as <code>database_*</code> parameters)</li>
 <li><code>web_profiler</code></li>
 <li><code>twig</code></li>
 </ul>

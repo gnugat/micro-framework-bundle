@@ -62,6 +62,18 @@
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="changelog">CHANGELOG</h1>
+<h2 id="040-commands">0.4.0: Commands</h2>
+<ul>
+<li>added support for <code>ContainerAwareCommand</code></li>
+<li>added support for <code>Command</code> not registered as services</li>
+</ul>
+<blockquote>
+<p><strong>BC breaks</strong>:</p>
+<ul>
+<li><code>Gnugat\MicroFrameworkBundle\Console\KernelApplication</code> has been
+moved to <code>Gnugat\MicroFrameworkBundle\Service\KernelApplication</code></li>
+</ul>
+</blockquote>
 <h2 id="030-console">0.3.0: Console</h2>
 <ul>
 <li>added support for <code>console.command</code> tag</li>

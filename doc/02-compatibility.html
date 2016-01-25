@@ -109,7 +109,7 @@ that third party bundles might depend on, and see how this can affect compatibil
 as well as how to fix it.</p>
 <h3 id="annotations">Annotations</h3>
 <p><code>MicroFrameworkBundle</code> doesn't provide support for annotations, but by manually
-setting up we can still be compatible with bundles that use this configuration format:</p>
+setting it up bundles that use this configuration format can be used:</p>
 <ol>
 <li>register an implementation of <code>Doctrine\Common\Annotations\Reader</code> as a service named <code>annotation_reader</code></li>
 <li>register <code>AnnotationLoader</code> for the related components (e.g. Validator, Routing, Serializer, etc)</li>
@@ -133,8 +133,8 @@ If there's many of them, the controller might do too much work (it should only b
 or it might needs to be split.</p>
 </blockquote>
 <h3 id="debug-toolbar-and-profiler">Debug Toolbar and Profiler</h3>
-<p>The debug toolbar isn't embeded provided by <code>MicroFrameworkBundle</code> as it would
-add a dependency on frontend tools.</p>
+<p>The debug toolbar isn't provided by <code>MicroFrameworkBundle</code> as it would add a
+dependency on frontend tools.</p>
 <p>It is still possible to install it by registering <code>DataCollectors</code> as well as the
 <code>Profiler</code>.</p>
 <blockquote>
@@ -143,18 +143,26 @@ add a dependency on frontend tools.</p>
 <h3 id="httpcache">HttpCache</h3>
 <p>No extensions for HttpCache are provided and ESI/fragements are not registered.</p>
 <h3 id="console">Console</h3>
-<p><code>FrameworkBundle</code> prodives a <code>ContainerAwareCommand</code>. Any bundle providing
-commands that extend it won't be compatible with <code>MicroFrameworkBundle</code>.</p>
-<p>We recommend to register those commands as services instead, as they will be
-supported in the future by <code>MicroFrameworkBundle</code>.</p>
+<p>While bundles that have <code>Commands</code> extending <code>ContainerAwareCommand</code> still require
+<code>FrameworkBundle</code>, they can be compatible with <code>MicroFrameworkBundle</code>.</p>
+<blockquote>
+<p><strong>Note</strong>: To drop the dependency on <code>FrameworkBundle</code>, the following solutions can be followed:</p>
+<ul>
+<li>implement <code>ContainerAwareInterface</code> and use <code>ContainerAwareTrait</code></li>
+<li>or register as a service and inject explicitely the dependencies</li>
+</ul>
+</blockquote>
 <p>Finally, <code>FrameworkBundle</code> provides its own Console <code>Application</code> that wraps the
-Kernel to access its registered bundles. This is planned to be supported.</p>
+Kernel to access its registered bundles.</p>
+<blockquote>
+<p><strong>Note</strong>: Some bundles, like <code>DoctrineBundle</code>, have a direct dependency on
+<code>FrameworkBundle</code>'s console <code>Application</code> making them incompatible with <code>MicroFrameworkBundle</code>.</p>
+</blockquote>
 <h3 id="missing-dependencies">Missing Dependencies</h3>
 <p>To follow the &quot;add what you need&quot; micro framework philosohpy, there are many components
 present in <code>FrameworkBundle</code> that are absent from <code>MicroFrameworkBundle</code>:</p>
 <ul>
 <li><code>symfony/asset</code></li>
-<li><code>symfony/finder</code></li>
 <li><code>symfony/security-core</code></li>
 <li><code>symfony/security-csrf</code></li>
 <li><code>symfony/stopwatch</code></li>
