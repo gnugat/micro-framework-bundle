@@ -1,6 +1,9 @@
 # CHANGELOG
 
-##
+## 0.4.0: Commands
+
+* added support for `ContainerAwareCommand`
+* added support for `Command` not registered as services
 
 > **BC breaks**:
 >
