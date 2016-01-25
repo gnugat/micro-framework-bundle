@@ -84,8 +84,8 @@ not be able to be registered.
 
 ### Debug Toolbar and Profiler
 
-The debug toolbar isn't embeded provided by `MicroFrameworkBundle` as it would
-add a dependency on frontend tools.
+The debug toolbar isn't provided by `MicroFrameworkBundle` as it would add a
+dependency on frontend tools.
 
 It is still possible to install it by registering `DataCollectors` as well as the
 `Profiler`.
@@ -104,10 +104,13 @@ While bundles that have `Commands` extending `ContainerAwareCommand` still requi
 > **Note**: To drop the dependency on `FrameworkBundle`, the following solutions can be followed:
 >
 > * implement `ContainerAwareInterface` and use `ContainerAwareTrait`
-> * register as a service and inject explicitely the dependencies
+> * or register as a service and inject explicitely the dependencies
 
 Finally, `FrameworkBundle` provides its own Console `Application` that wraps the
 Kernel to access its registered bundles.
+
+> **Note**: Some bundles, like `DoctrineBundle`, have a direct dependency on
+> `FrameworkBundle`'s console `Application` making them incompatible with `MicroFrameworkBundle`.
 
 ### Missing Dependencies
 

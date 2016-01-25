@@ -40,4 +40,19 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
 
         self::assertSame(0, $statusCode, $this->app->getDisplay());
     }
+
+    /**
+     * @test
+     */
+    public function it_runs_container_aware_commands()
+    {
+        $input = array(
+            'say-hello-aware',
+            'name' => 'Igor',
+        );
+
+        $statusCode = $this->app->run($input);
+
+        self::assertSame(0, $statusCode, $this->app->getDisplay());
+    }
 }
