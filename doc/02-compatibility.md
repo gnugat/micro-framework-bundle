@@ -54,7 +54,7 @@ as well as how to fix it.
 ### Annotations
 
 `MicroFrameworkBundle` doesn't provide support for annotations, but by manually
-setting up we can still be compatible with bundles that use this configuration format:
+setting it up bundles that use this configuration format can be used:
 
 1. register an implementation of `Doctrine\Common\Annotations\Reader` as a service named `annotation_reader`
 2. register `AnnotationLoader` for the related components (e.g. Validator, Routing, Serializer, etc)
@@ -84,8 +84,8 @@ not be able to be registered.
 
 ### Debug Toolbar and Profiler
 
-The debug toolbar isn't embeded provided by `MicroFrameworkBundle` as it would
-add a dependency on frontend tools.
+The debug toolbar isn't provided by `MicroFrameworkBundle` as it would add a
+dependency on frontend tools.
 
 It is still possible to install it by registering `DataCollectors` as well as the
 `Profiler`.
@@ -98,14 +98,19 @@ No extensions for HttpCache are provided and ESI/fragements are not registered.
 
 ### Console
 
-`FrameworkBundle` prodives a `ContainerAwareCommand`. Any bundle providing
-commands that extend it won't be compatible with `MicroFrameworkBundle`.
+While bundles that have `Commands` extending `ContainerAwareCommand` still require
+`FrameworkBundle`, they can be compatible with `MicroFrameworkBundle`.
 
-We recommend to register those commands as services instead, as they will be
-supported in the future by `MicroFrameworkBundle`.
+> **Note**: To drop the dependency on `FrameworkBundle`, the following solutions can be followed:
+>
+> * implement `ContainerAwareInterface` and use `ContainerAwareTrait`
+> * or register as a service and inject explicitely the dependencies
 
 Finally, `FrameworkBundle` provides its own Console `Application` that wraps the
-Kernel to access its registered bundles. This is planned to be supported.
+Kernel to access its registered bundles.
+
+> **Note**: Some bundles, like `DoctrineBundle`, have a direct dependency on
+> `FrameworkBundle`'s console `Application` making them incompatible with `MicroFrameworkBundle`.
 
 ### Missing Dependencies
 
@@ -113,7 +118,6 @@ To follow the "add what you need" micro framework philosohpy, there are many com
 present in `FrameworkBundle` that are absent from `MicroFrameworkBundle`:
 
 * `symfony/asset`
-* `symfony/finder`
 * `symfony/security-core`
 * `symfony/security-csrf`
 * `symfony/stopwatch`

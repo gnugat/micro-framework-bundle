@@ -31,12 +31,12 @@ Next, the `framework` configuration key needs to be removed from `app/config/con
 
 Finally, in the `bin/console` file
 replace `Symfony\Bundle\FrameworkBundle\Console\Application`
-with `Gnugat\MicroFrameworkBundle\Console\KernelApplication as Application`.
+with `Gnugat\MicroFrameworkBundle\Service\KernelApplication as Application`.
 
 ## Standard Edition
 
-The [Standard Edition](https://github.com/symfony/symfony-standard) provides some
-pre-installed libraries:
+There's an official distribution: [Standard Edition](https://github.com/symfony/symfony-standard).
+It provides pre-installed libraries, but it can be installed in the same manner:
 
 ```
 composer create-project symfony/framework-standard-edition
@@ -44,9 +44,10 @@ cd framework-standard-edition
 composer require 'gnugat/micro-framework-bundle'
 ```
 
-Then we need to clean `app/AppKernel.php` file by removing the bundles following:
+Then we need to clean `app/AppKernel.php` file by removing the following bundles:
 
 * `Symfony\Bundle\FrameworkBundle\FrameworkBundle`
+* `Doctrine\Bundle\DoctrineBundle\DoctrineBundle` (depends on FrameworkBundle specific console Application)
 * `Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle` (depends on annotations)
 * `Symfony\Bundle\TwigBundle\TwigBundle` (depends on assets)
 * `Symfony\Bundle\WebProfilerBundle\WebProfilerBundle` (depends on data collectors)
@@ -56,6 +57,7 @@ Don't forget to add `Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle`.
 Next remove configuration for the following keys in `app/config/config*.yml`:
 
 * `framework`
+* `doctrine` (as well as `database_*` parameters)
 * `web_profiler`
 * `twig`
 

@@ -11,7 +11,7 @@
 
 namespace Gnugat\MicroFrameworkBundle\Tests;
 
-use Gnugat\MicroFrameworkBundle\Console\KernelApplication;
+use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
 class ConsoleTest extends \PHPUnit_Framework_TestCase
@@ -33,6 +33,21 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     {
         $input = array(
             'say-hello',
+            'name' => 'Igor',
+        );
+
+        $statusCode = $this->app->run($input);
+
+        self::assertSame(0, $statusCode, $this->app->getDisplay());
+    }
+
+    /**
+     * @test
+     */
+    public function it_runs_container_aware_commands()
+    {
+        $input = array(
+            'say-hello-aware',
             'name' => 'Igor',
         );
 

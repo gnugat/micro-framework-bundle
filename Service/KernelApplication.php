@@ -9,12 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Gnugat\MicroFrameworkBundle\Console;
+namespace Gnugat\MicroFrameworkBundle\Service;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -45,6 +47,18 @@ class KernelApplication extends Application
     {
         $this->kernel->boot();
         $container = $this->kernel->getContainer();
+        $bundles = $this->kernel->getBundles();
+        foreach ($bundles as $bundle) {
+            if ($bundle instanceof Bundle) {
+                $bundle->registerCommands($this);
+            }
+        }
+        $commands = $this->all();
+        foreach ($commands as $command) {
+            if ($command instanceof ContainerAwareInterface) {
+                $command->setContainer($container);
+            }
+        }
         if (true === $container->hasParameter('console.command.ids')) {
             foreach ($container->getParameter('console.command.ids') as $id) {
                 $this->add($container->get($id));
