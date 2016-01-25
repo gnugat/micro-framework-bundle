@@ -11,7 +11,7 @@
 
 namespace Gnugat\MicroFrameworkBundle\Tests;
 
-use Gnugat\MicroFrameworkBundle\Console\KernelApplication;
+use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
 class ConsoleTest extends \PHPUnit_Framework_TestCase

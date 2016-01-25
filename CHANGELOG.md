@@ -1,5 +1,12 @@
 # CHANGELOG
 
+##
+
+> **BC breaks**:
+>
+> * `Gnugat\MicroFrameworkBundle\Console\KernelApplication` has been
+>   moved to `Gnugat\MicroFrameworkBundle\Service\KernelApplication`
+
 ## 0.3.0: Console
 
 * added support for `console.command` tag
