@@ -42,7 +42,7 @@ ab -t 10 'http://localhost:2501/index.php'
 killall php
 ```
 
-Result: **6 915.03** Requests per second.
+Result: **3 868.85** Requests per second.
 
 ## Standard Edition
 
@@ -82,29 +82,39 @@ class DefaultController extends Controller
 Let's run the benchmark:
 
 ```
-SYMFONY_ENV=prod composer update -o --no-dev
+composer update -o --no-dev
+php bin/console cache:clear --env=prod --no-debug
 php -S localhost:2502 -t web &
 ab -t 10 'http://localhost:2502/app.php'
 killall php
 ```
 
-Result: **134.23** Requests per second.
+Result: **174.92** Requests per second.
 
 We're also going to list the dependencies:
 
 ```
-tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l
+find vendor -mindepth 2 -maxdepth 2 -type d | wc -l
 ```
 
-We get 28 + 1, to which we need to substitute `symfony` with all the
+We get 29, to which we need to substitute `symfony` with all the
 packages it replaces (44): 72.
 
 So to sum up:
 
 * API: 1 step to add a new route
-* footprint: 52x slower than flat PHP
+* footprint: 22x slower than flat PHP
 * size: 72 dependencies
+
+> **Note**: Profiling it using [blackfire]():
+>
+> ```
+> blackfire curl 'http://localhost:2502/app.php'
+> ```
+>
+> Here's the [grap](https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/graph):
+>
+> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/embed"></iframe>
 
 ## Empty Edition
 
@@ -143,7 +153,15 @@ class HelloController
 Then we register it as a service:
 
 ```
-# app/config/services/controller.yml
+# app/config/config.yml
+imports:
+    - { resource: parameters.yml }
+
+framework:
+    secret: "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routings.yml"
+
 services:
     app.hello_controller:
         class: AppBundle\Controller\HelloController
@@ -152,7 +170,7 @@ services:
 Finally we register the route:
 
 ```
-# app/config/routings/app.yml
+# app/config/routings.yml
 hello_world:
     path: /
     defaults:
@@ -165,28 +183,41 @@ Let's run the benchmark:
 
 ```
 composer update -o --no-dev
-bin/console ca:c -e=prod --no-debug
+bin/console cache:clear -e=prod --no-debug
 php -S localhost:2503 -t web &
 ab -t 10 'http://localhost:2503/app.php'
 killall php
 ```
 
-Result: **524.53** Requests per second.
+Result: **485.08** Requests per second.
 
 We're also going to list the dependencies:
 
 ```
-tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l
+find vendor -mindepth 2 -maxdepth 2 -type d | wc -l
 ```
 
-We get 6 + 23 = 29.
+We get 29.
 
 So to sum up:
 
 * API: 3 steps to add a new route
-* footprint: 13x slower than flat PHP
+* footprint: 8x slower than flat PHP
 * size: 29 dependencies
+
+> **Note**: Profiling it using blackfire:
+>
+> ```
+> blackfire curl 'http://localhost:2503/app.php'
+> ```
+>
+> Here's the [grap](https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph):
+>
+> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
+>
+> Here's the [comparison grap](https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph):
+>
+> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
 
 ## Micro Framework Bundle
 
@@ -280,7 +311,10 @@ Finally we can get rid of some configuration:
 # app/config/config.yml
 imports:
     - { resource: parameters.yml }
-    - { resource: services/ }
+
+services:
+    app.hello_controller:
+        class: AppBundle\Controller\HelloController
 ```
 
 Let's benchmark our trimmed application:
@@ -295,22 +329,36 @@ ab -t 10 'http://localhost:2504/app.php'
 killall php
 ```
 
-Result: **872.83** Requests per second.
+Result: **709.05** Requests per second.
 
 We're also going to list the dependencies:
 
 ```
-tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l
+find vendor -mindepth 2 -maxdepth 2 -type d | wc -l
 ```
 
-We get 3 + 13 = 16.
+We get 16.
 
 So to sum up:
 
 * API: 3 steps to add a new route
-* footprint: 8x slower than flat PHP
+* footprint: 5x slower than flat PHP
 * size: 13 dependencies
+
+> **Note**: Profiling it using blackfire:
+>
+> ```
+> blackfire curl 'http://localhost:2504/app.php'
+> ```
+>
+> Here's the [grap](https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/graph):
+>
+> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
+>
+> Here's the [comparison grap](https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/graph):
+>
+> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
+
 
 ## Conclusion
 
