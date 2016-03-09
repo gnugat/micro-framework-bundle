@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.0: Cache clear & warmup
+
+* added `cache:warmup` command
+* added `cache:clear` command
+
 ## 0.4.0: Commands
 
 * added support for `ContainerAwareCommand`

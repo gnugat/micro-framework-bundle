@@ -7,7 +7,7 @@ micro-framework which follows the "add what you need" philosophy.
 
 First install it using [Composer](https://getcomposer.org/download):
 
-    composer require gnugat/micro-framework-bundle:^0.4
+    composer require gnugat/micro-framework-bundle:^0.5
 
 Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
 
