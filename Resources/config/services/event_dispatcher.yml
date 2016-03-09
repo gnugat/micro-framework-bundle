@@ -1,5 +1,5 @@
 services:
     event_dispatcher:
-        class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+        class: 'Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher'
         arguments:
-            - "@service_container"
+            - '@service_container'

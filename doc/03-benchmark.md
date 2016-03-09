@@ -27,7 +27,8 @@ Since dependencies and footprint are easy to measure, we're going to rely on it.
 However, all benchmarks are relative to the computer that executes them, so we need
 a point of reference: a flat PHP "Hello World" application:
 
-```
+```php
+<?php
 // index.php
 
 echo 'Hello World';
@@ -37,7 +38,7 @@ Let's run the benchmark:
 
 ```
 php -S localhost:2501 &
-ab -c 10 -t 10 'http://localhost:2501/index.php'
+ab -t 10 'http://localhost:2501/index.php'
 killall php
 ```
 
@@ -55,7 +56,8 @@ cd framework-standard-edition
 Since the standard edition follows a "solve 80% of use cases out of the box" philosohpy,
 it's almost ready, we just need to tweak the given controller:
 
-```
+```php
+<?php
 // src/AppBundle/Controller/DefaultController.php
 
 namespace AppBundle\Controller;
@@ -82,7 +84,7 @@ Let's run the benchmark:
 ```
 SYMFONY_ENV=prod composer update -o --no-dev
 php -S localhost:2502 -t web &
-ab -c 10 -t 10 'http://localhost:2502/app.php'
+ab -t 10 'http://localhost:2502/app.php'
 killall php
 ```
 
@@ -120,7 +122,8 @@ cd symfony-empty-edition
 
 The first step is to create a controller:
 
-```
+```php
+<?php
 // src/AppBundle/Controller/HelloController.php
 
 namespace AppBundle\Controller;
@@ -162,8 +165,9 @@ Let's run the benchmark:
 
 ```
 composer update -o --no-dev
+bin/console ca:c -e=prod --no-debug
 php -S localhost:2503 -t web &
-ab -c 10 -t 10 'http://localhost:2503/app.php'
+ab -t 10 'http://localhost:2503/app.php'
 killall php
 ```
 
@@ -208,7 +212,8 @@ composer remove 'symfony/framework-bundle'
 
 Then we need to swap the bundle in the registration:
 
-```
+```php
+<?php
 // app/AppKernel.php
 
 use Symfony\Component\HttpKernel\Kernel;
@@ -246,6 +251,29 @@ class AppKernel extends Kernel
 }
 ```
 
+Next we need to update the console:
+
+```php
+#!/usr/bin/env php
+<?php
+// bin/console
+
+set_time_limit(0);
+
+require_once __DIR__.'/../app/autoload.php';
+
+use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
+use Symfony\Component\Console\Input\ArgvInput;
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(array('--env', '-e'), 'dev');
+$debug = !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
+
+$kernel = new AppKernel($env, $debug);
+$application = new KernelApplication($kernel);
+$application->run($input);
+```
+
 Finally we can get rid of some configuration:
 
 ```
@@ -260,8 +288,10 @@ Let's benchmark our trimmed application:
 ```
 rm -rf var/*
 composer update -o --no-dev
+bin/console ca:c -e=prod --no-debug
+bin/console ca:w -e=prod --no-debug
 php -S localhost:2504 -t web &
-ab -c 10 -t 10 'http://localhost:2504/app.php'
+ab -t 10 'http://localhost:2504/app.php'
 killall php
 ```
 
