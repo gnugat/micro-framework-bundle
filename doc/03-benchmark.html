@@ -87,21 +87,23 @@ Symfony's API, LOC, dependencies and footprint.</p>
 <p>Since dependencies and footprint are easy to measure, we're going to rely on it.
 However, all benchmarks are relative to the computer that executes them, so we need
 a point of reference: a flat PHP &quot;Hello World&quot; application:</p>
-<pre><code>// index.php
+<pre><code class="language-php">&lt;?php
+// index.php
 
 echo 'Hello World';</code></pre>
 <p>Let's run the benchmark:</p>
 <pre><code>php -S localhost:2501 &amp;
-ab -c 10 -t 10 'http://localhost:2501/index.php'
+ab -t 10 'http://localhost:2501/index.php'
 killall php</code></pre>
-<p>Result: <strong>6 915.03</strong> Requests per second.</p>
+<p>Result: <strong>3 868.85</strong> Requests per second.</p>
 <h2 id="standard-edition">Standard Edition</h2>
 <p>To get the Standard Edition, we can use composer:</p>
 <pre><code>composer create-project symfony/framework-standard-edition
 cd framework-standard-edition</code></pre>
 <p>Since the standard edition follows a &quot;solve 80% of use cases out of the box&quot; philosohpy,
 it's almost ready, we just need to tweak the given controller:</p>
-<pre><code>// src/AppBundle/Controller/DefaultController.php
+<pre><code class="language-php">&lt;?php
+// src/AppBundle/Controller/DefaultController.php
 
 namespace AppBundle\Controller;
 
@@ -121,22 +123,28 @@ class DefaultController extends Controller
     }
 }</code></pre>
 <p>Let's run the benchmark:</p>
-<pre><code>SYMFONY_ENV=prod composer update -o --no-dev
+<pre><code>composer update -o --no-dev
+php bin/console cache:clear --env=prod --no-debug
 php -S localhost:2502 -t web &amp;
-ab -c 10 -t 10 'http://localhost:2502/app.php'
+ab -t 10 'http://localhost:2502/app.php'
 killall php</code></pre>
-<p>Result: <strong>134.23</strong> Requests per second.</p>
+<p>Result: <strong>174.92</strong> Requests per second.</p>
 <p>We're also going to list the dependencies:</p>
-<pre><code>tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l</code></pre>
-<p>We get 28 + 1, to which we need to substitute <code>symfony</code> with all the
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 29, to which we need to substitute <code>symfony</code> with all the
 packages it replaces (44): 72.</p>
 <p>So to sum up:</p>
 <ul>
 <li>API: 1 step to add a new route</li>
-<li>footprint: 52x slower than flat PHP</li>
+<li>footprint: 22x slower than flat PHP</li>
 <li>size: 72 dependencies</li>
 </ul>
+<blockquote>
+<p><strong>Note</strong>: Profiling it using [blackfire]():</p>
+<pre><code>blackfire curl 'http://localhost:2502/app.php'</code></pre>
+<p>Here's the <a href="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/graph">grap</a>:</p>
+<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/embed"></iframe>
+</blockquote>
 <h2 id="empty-edition">Empty Edition</h2>
 <p>As stated above the Standard Edition has a &quot;solve 80% of use cases out of the box&quot;
 philosophy, so it comes with many dependencies that might not fit our use. Micro
@@ -146,7 +154,8 @@ the Empty Edition is all about.</p>
 <pre><code>composer create-project gnugat/symfony-empty-edition
 cd symfony-empty-edition</code></pre>
 <p>The first step is to create a controller:</p>
-<pre><code>// src/AppBundle/Controller/HelloController.php
+<pre><code class="language-php">&lt;?php
+// src/AppBundle/Controller/HelloController.php
 
 namespace AppBundle\Controller;
 
@@ -161,12 +170,20 @@ class HelloController
     }
 }</code></pre>
 <p>Then we register it as a service:</p>
-<pre><code># app/config/services/controller.yml
+<pre><code># app/config/config.yml
+imports:
+    - { resource: parameters.yml }
+
+framework:
+    secret: "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routings.yml"
+
 services:
     app.hello_controller:
         class: AppBundle\Controller\HelloController</code></pre>
 <p>Finally we register the route:</p>
-<pre><code># app/config/routings/app.yml
+<pre><code># app/config/routings.yml
 hello_world:
     path: /
     defaults:
@@ -175,20 +192,28 @@ hello_world:
         - GET</code></pre>
 <p>Let's run the benchmark:</p>
 <pre><code>composer update -o --no-dev
+bin/console cache:clear -e=prod --no-debug
 php -S localhost:2503 -t web &amp;
-ab -c 10 -t 10 'http://localhost:2503/app.php'
+ab -t 10 'http://localhost:2503/app.php'
 killall php</code></pre>
-<p>Result: <strong>524.53</strong> Requests per second.</p>
+<p>Result: <strong>485.08</strong> Requests per second.</p>
 <p>We're also going to list the dependencies:</p>
-<pre><code>tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l</code></pre>
-<p>We get 6 + 23 = 29.</p>
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 29.</p>
 <p>So to sum up:</p>
 <ul>
 <li>API: 3 steps to add a new route</li>
-<li>footprint: 13x slower than flat PHP</li>
+<li>footprint: 8x slower than flat PHP</li>
 <li>size: 29 dependencies</li>
 </ul>
+<blockquote>
+<p><strong>Note</strong>: Profiling it using blackfire:</p>
+<pre><code>blackfire curl 'http://localhost:2503/app.php'</code></pre>
+<p>Here's the <a href="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph">grap</a>:</p>
+<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
+<p>Here's the <a href="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph">comparison grap</a>:</p>
+<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
+</blockquote>
 <h2 id="micro-framework-bundle">Micro Framework Bundle</h2>
 <p>By reducing the number of dependencies, we also drastically reduced the framework
 footprint. This is not surprising as:</p>
@@ -206,7 +231,8 @@ the number of dependencies. Hence <code>gnugat/micro-framework-bundle</code>:</p
 <pre><code>composer require 'gnugat/micro-framework-bundle'
 composer remove 'symfony/framework-bundle'</code></pre>
 <p>Then we need to swap the bundle in the registration:</p>
-<pre><code>// app/AppKernel.php
+<pre><code class="language-php">&lt;?php
+// app/AppKernel.php
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -241,28 +267,59 @@ class AppKernel extends Kernel
         $loader-&gt;load($this-&gt;rootDir.'/config/config_'.$this-&gt;environment.'.yml');
     }
 }</code></pre>
+<p>Next we need to update the console:</p>
+<pre><code class="language-php">#!/usr/bin/env php
+&lt;?php
+// bin/console
+
+set_time_limit(0);
+
+require_once __DIR__.'/../app/autoload.php';
+
+use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
+use Symfony\Component\Console\Input\ArgvInput;
+
+$input = new ArgvInput();
+$env = $input-&gt;getParameterOption(array('--env', '-e'), 'dev');
+$debug = !$input-&gt;hasParameterOption(array('--no-debug', '')) &amp;&amp; $env !== 'prod';
+
+$kernel = new AppKernel($env, $debug);
+$application = new KernelApplication($kernel);
+$application-&gt;run($input);</code></pre>
 <p>Finally we can get rid of some configuration:</p>
 <pre><code># app/config/config.yml
 imports:
     - { resource: parameters.yml }
-    - { resource: services/ }</code></pre>
+
+services:
+    app.hello_controller:
+        class: AppBundle\Controller\HelloController</code></pre>
 <p>Let's benchmark our trimmed application:</p>
 <pre><code>rm -rf var/*
 composer update -o --no-dev
+bin/console ca:c -e=prod --no-debug
+bin/console ca:w -e=prod --no-debug
 php -S localhost:2504 -t web &amp;
-ab -c 10 -t 10 'http://localhost:2504/app.php'
+ab -t 10 'http://localhost:2504/app.php'
 killall php</code></pre>
-<p>Result: <strong>872.83</strong> Requests per second.</p>
+<p>Result: <strong>709.05</strong> Requests per second.</p>
 <p>We're also going to list the dependencies:</p>
-<pre><code>tree -d -L 2 vendor/ | grep '   ' | wc -l
-tree -d -L 2 vendor/ | grep '    ' | wc -l</code></pre>
-<p>We get 3 + 13 = 16.</p>
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 16.</p>
 <p>So to sum up:</p>
 <ul>
 <li>API: 3 steps to add a new route</li>
-<li>footprint: 8x slower than flat PHP</li>
+<li>footprint: 5x slower than flat PHP</li>
 <li>size: 13 dependencies</li>
 </ul>
+<blockquote>
+<p><strong>Note</strong>: Profiling it using blackfire:</p>
+<pre><code>blackfire curl 'http://localhost:2504/app.php'</code></pre>
+<p>Here's the <a href="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/graph">grap</a>:</p>
+<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
+<p>Here's the <a href="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/graph">comparison grap</a>:</p>
+<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
+</blockquote>
 <h2 id="conclusion">Conclusion</h2>
 <p>Symfony has always been able to be used as a micro framework bundle.</p>
 <p>The <a href="https://github.com/symfony/symfony-standard">Standard Edition</a> and the
