@@ -1,0 +1,16 @@
+services:
+    response_listener:
+        class: 'Symfony\Component\HttpKernel\EventListener\ResponseListener'
+        arguments:
+            - '%kernel.charset%'
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
+    router_listener:
+        class: 'Symfony\Component\HttpKernel\EventListener\RouterListener'
+        arguments:
+            - '@router'
+            - '@request_stack'
+            - '@router.request_context'
+        tags:
+            - { name: kernel.event_subscriber }

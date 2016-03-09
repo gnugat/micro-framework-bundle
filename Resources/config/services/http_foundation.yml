@@ -1,4 +1,4 @@
 services:
     request_stack:
-        class: Symfony\Component\HttpFoundation\RequestStack
+        class: 'Symfony\Component\HttpFoundation\RequestStack'
 

@@ -1,47 +1,28 @@
 services:
     http_kernel:
-        class: Symfony\Component\HttpKernel\HttpKernel
+        class: 'Symfony\Component\HttpKernel\HttpKernel'
         arguments:
-            - "@event_dispatcher"
-            - "@service_controller_resolver"
-            - "@request_stack"
+            - '@event_dispatcher'
+            - '@service_controller_resolver'
+            - '@request_stack'
 
     kernel:
         synthetic: true
 
     service_controller_resolver:
-        class: Gnugat\MicroFrameworkBundle\Service\ServiceControllerResolver
+        class: 'Gnugat\MicroFrameworkBundle\Service\ServiceControllerResolver'
         public: false
         arguments:
-            - "@service_container"
-            - "@controller_resolver"
+            - '@service_container'
+            - '@controller_resolver'
 
     controller_resolver:
-        class: Symfony\Component\HttpKernel\Controller\ControllerResolver
+        class: 'Symfony\Component\HttpKernel\Controller\ControllerResolver'
         public: false
 
     file_locator:
-        class: Symfony\Component\HttpKernel\Config\FileLocator
+        class: 'Symfony\Component\HttpKernel\Config\FileLocator'
         public: false
         arguments:
-            - "@kernel"
-            - "%kernel.root_dir%/Resources"
-
-    ###
-    # EventListener
-    ###
-    response_listener:
-        class: Symfony\Component\HttpKernel\EventListener\ResponseListener
-        arguments:
-            - "%kernel.charset%"
-        tags:
-            - { name: "kernel.event_subscriber" }
-
-    router_listener:
-        class: Symfony\Component\HttpKernel\EventListener\RouterListener
-        arguments:
-            - "@router"
-            - "@request_stack"
-            - "@router.request_context"
-        tags:
-            - { name: kernel.event_subscriber }
+            - '@kernel'
+            - '%kernel.root_dir%/Resources'

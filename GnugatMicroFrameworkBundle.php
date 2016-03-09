@@ -11,6 +11,8 @@
 
 namespace Gnugat\MicroFrameworkBundle;
 
+use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\CacheClearerCompilerPass;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\CacheWarmerCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\ConsoleCommandCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\RoutingResolverCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -27,6 +29,8 @@ class GnugatMicroFrameworkBundle extends Bundle
     {
         parent::build($container);
 
+        $container->addCompilerPass(new CacheClearerCompilerPass());
+        $container->addCompilerPass(new CacheWarmerCompilerPass());
         $container->addCompilerPass(new ConsoleCommandCompilerPass());
         $container->addCompilerPass(new RoutingResolverCompilerPass());
         $container->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
