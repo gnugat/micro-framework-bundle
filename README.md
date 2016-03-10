@@ -13,7 +13,7 @@ Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
 
     new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()
 
-[More information](doc/01-installation.html)
+[More information](doc/01-installation.md)
 
 ## Features
 
