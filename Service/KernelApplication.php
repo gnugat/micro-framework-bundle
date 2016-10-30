@@ -40,7 +40,7 @@ class KernelApplication extends Application
         $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
 	
-	/**
+    /**
      * @return KernelInterface
      */
     public function getKernel()
