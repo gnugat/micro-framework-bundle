@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.1: Get Kernel
+
+* added `getKernel()` to `KernelApplication` (thanks @Edwin-Luijten)
+
 ## 0.5.0: Cache clear & warmup
 
 * added `cache:warmup` command
