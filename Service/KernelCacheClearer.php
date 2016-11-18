@@ -2,6 +2,7 @@
 
 namespace Gnugat\MicroFrameworkBundle\Service;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 /**
@@ -14,6 +15,7 @@ class KernelCacheClearer implements CacheClearerInterface
      */
     public function clear($cacheDir)
     {
-        exec("rm -rf $cacheDir");
+        $filesystem = new Filesystem();
+        $filesystem->remove($cacheDir);
     }
 }
