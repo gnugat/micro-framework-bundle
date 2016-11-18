@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.2: OS X cache clear
+
+* Used `Filesystem` to make cache clear compatible with OS X (thanks @Edwin-Luijten)
+
 ## 0.5.1: Get Kernel
 
 * added `getKernel()` to `KernelApplication` (thanks @Edwin-Luijten)
