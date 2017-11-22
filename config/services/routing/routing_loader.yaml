@@ -1,0 +1,35 @@
+services:
+    routing.loader.xml:
+        class: 'Symfony\Component\Routing\Loader\XmlFileLoader'
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
+
+    routing.loader.yml:
+        class: 'Symfony\Component\Routing\Loader\YamlFileLoader'
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
+
+    routing.loader.php:
+        class: 'Symfony\Component\Routing\Loader\PhpFileLoader'
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
+
+    routing.loader.directory:
+        class: 'Symfony\Component\Routing\Loader\DirectoryLoader'
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
+
+    routing.loader.service:
+        class: 'Symfony\Component\Routing\Loader\DependencyInjection\ServiceRouterLoader'
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: routing.loader }

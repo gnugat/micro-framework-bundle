@@ -1,6 +1,0 @@
-hello_world:
-    path: /
-    defaults:
-        _controller: app.my_controller:helloWorld
-    methods:
-        - GET

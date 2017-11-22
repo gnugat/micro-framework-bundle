@@ -1,0 +1,36 @@
+services:
+    http_kernel:
+        class: 'Symfony\Component\HttpKernel\HttpKernel'
+        public: true
+        arguments:
+            - '@event_dispatcher'
+            - '@service_controller_resolver'
+            - '@request_stack'
+
+    'Symfony\Component\HttpKernel\HttpKernelInterface':
+        alias: http_kernel
+
+    kernel:
+        public: true
+        synthetic: true
+
+    'Symfony\Component\HttpKernel\KernelInterface':
+        alias: kernel
+
+    service_controller_resolver:
+        class: 'Gnugat\MicroFrameworkBundle\Service\ServiceControllerResolver'
+        arguments:
+            - '@service_container'
+            - '@controller_resolver'
+
+    controller_resolver:
+        class: 'Symfony\Component\HttpKernel\Controller\ControllerResolver'
+
+    file_locator:
+        class: 'Symfony\Component\HttpKernel\Config\FileLocator'
+        arguments:
+            - '@kernel'
+            - '%kernel.root_dir%/Resources'
+
+    'Symfony\Component\HttpKernel\Config\FileLocator':
+        alias: file_locator
