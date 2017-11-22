@@ -1,0 +1,2 @@
+third_party:
+    resource: '@GnugatCustomBundle/routings/hello_world.yaml'

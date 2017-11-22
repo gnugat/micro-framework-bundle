@@ -1,0 +1,9 @@
+services:
+    event_dispatcher:
+        class: 'Symfony\Component\EventDispatcher\EventDispatcher'
+        public: true
+        arguments:
+            - '@service_container'
+
+    'Symfony\Component\EventDispatcher\EventDispatcherInterface':
+        alias: event_dispatcher

@@ -1,0 +1,27 @@
+services:
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller\MyController':
+        public: true
+        arguments:
+            - '@tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler'
+
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command\SayHelloCommand':
+        public: true
+        arguments:
+            - '@tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler'
+        tags:
+            - { name: console.command, command: say-helo }
+    
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command\SayHelloAwareCommand':
+        public: true
+        tags:
+            - { name: console.command, command: say-hello-aware }
+
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService':
+        public: true
+
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler':
+        public: true
+        arguments:
+            - '@logger'
+        tags:
+            - { name: monolog.logger }

@@ -1,0 +1,19 @@
+services:
+    cache_clearer:
+        class: 'Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer'
+        arguments:
+            - []
+
+    kernel_cache_clearer:
+        class: 'Gnugat\MicroFrameworkBundle\Service\KernelCacheClearer'
+        tags:
+            - { name: kernel.cache_clearer }
+
+    cache_clear_command:
+        class: 'Gnugat\MicroFrameworkBundle\Command\CacheClearCommand'
+        public: true
+        arguments:
+            - '@cache_clearer'
+            - '%kernel.cache_dir%'
+        tags:
+            - { name: console.command, command: 'cache:clear' }

@@ -4,7 +4,7 @@
 <phpunit backupGlobals="false" colors="true" syntaxCheck="false" bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="Integration Tests">
-            <directory>Tests</directory>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>

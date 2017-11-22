@@ -1,0 +1,23 @@
+services:
+    cache_warmer:
+        class: 'Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate'
+        arguments:
+            - []
+        calls:
+            - [ enableOptionalWarmers, [] ]
+
+    router_cache_warmer:
+        class: 'Gnugat\MicroFrameworkBundle\Service\RouterCacheWarmer'
+        arguments:
+            - '@router'
+        tags:
+            - {name: kernel.cache_warmer }
+
+    cache_warmup_command:
+        class: 'Gnugat\MicroFrameworkBundle\Command\CacheWarmupCommand'
+        public: true
+        arguments:
+            - '@cache_warmer'
+            - '%kernel.cache_dir%'
+        tags:
+            - { name: console.command, command: 'cache:warmup' }
