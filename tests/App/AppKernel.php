@@ -16,9 +16,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-    /**
-     * {@inheritdoc}
-     */
     public function registerBundles()
     {
         return array(
@@ -32,9 +29,21 @@ class AppKernel extends Kernel
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getRootDir()
+    {
+        return __DIR__;
+    }
+
+    public function getCacheDir()
+    {
+        return __DIR__.'/var/cache/'.$this->environment;
+    }
+
+    public function getLogDir()
+    {
+        return __DIR__.'/var/logs';
+    }
+
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config.yaml');
