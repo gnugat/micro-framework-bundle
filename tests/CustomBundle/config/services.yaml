@@ -1,4 +1,8 @@
 services:
+    'is_monolog_bundle_registered':
+        alias: 'logger'
+        public: true
+
     'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller\MyController':
         public: true
         arguments:
