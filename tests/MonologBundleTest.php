@@ -20,7 +20,7 @@ class MonologBundleTest extends TestCase
 {
     private $kernel;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();

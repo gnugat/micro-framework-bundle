@@ -20,7 +20,7 @@ class ConsoleTest extends TestCase
 {
     private $app;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $kernel = new AppKernel('test', false);
         $application = new KernelApplication($kernel);

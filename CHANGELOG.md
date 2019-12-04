@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.0
+
+* Upgraded tests to PHPUnit 8
+
 ## 0.5.2: OS X cache clear
 
 * Used `Filesystem` to make cache clear compatible with OS X (thanks @Edwin-Luijten)
