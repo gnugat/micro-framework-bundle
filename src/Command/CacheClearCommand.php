@@ -10,20 +10,9 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 class CacheClearCommand extends Command
 {
-    /**
-     * @var CacheClearerInterface
-     */
     private $cacheClearer;
-
-    /**
-     * @var string
-     */
     private $cacheDir;
 
-    /**
-     * @param CacheClearerInterface $cacheClearer
-     * @param string                $cacheDir
-     */
     public function __construct(CacheClearerInterface $cacheClearer, $cacheDir)
     {
         $this->cacheClearer = $cacheClearer;
@@ -31,9 +20,6 @@ class CacheClearCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this->setName('cache:clear');
@@ -51,9 +37,6 @@ HELP
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);

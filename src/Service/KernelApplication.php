@@ -24,24 +24,10 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class KernelApplication extends Application
 {
-    /**
-     * @var KernelInterface
-     */
     private $kernel;
-
-    /**
-     * @var bool
-     */
     private $commandsRegistered = false;
-
-    /**
-     * @var array
-     */
     private $registrationErrors = array();
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
@@ -52,17 +38,11 @@ class KernelApplication extends Application
         $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
 	
-    /**
-     * @return KernelInterface
-     */
     public function getKernel()
     {
         return $this->kernel;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->kernel->boot();
@@ -76,9 +56,6 @@ class KernelApplication extends Application
         return parent::doRun($input, $output);
     }
     
-    /**
-     * {@inheritdoc}
-     */
     public function find($name)
     {
         $this->registerCommands();
@@ -86,9 +63,6 @@ class KernelApplication extends Application
         return parent::find($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($name)
     {
         $this->registerCommands();
@@ -102,9 +76,6 @@ class KernelApplication extends Application
         return $command;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all($namespace = null)
     {
         $this->registerCommands();
@@ -112,9 +83,6 @@ class KernelApplication extends Application
         return parent::all($namespace);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function add(Command $command)
     {
         $this->registerCommands();

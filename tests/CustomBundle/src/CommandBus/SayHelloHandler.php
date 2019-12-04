@@ -15,29 +15,18 @@ use Psr\Log\LoggerInterface;
 
 class SayHelloHandler
 {
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
 
-    /**
-     * @param LoggerInterface $logger
-     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
-    /**
-     * @param SayHello $sayHello
-     *
-     * @return string
-     */
-    public function handle(SayHello $sayHello)
+    public function handle(SayHello $sayHello): string
     {
-        $this->logger->debug('Said hello', array(
+        $this->logger->debug('Said hello', [
             'name' => $sayHello->name,
-        ));
+        ]);
 
         return "Hello {$sayHello->name}!";
     }

@@ -10,20 +10,9 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class CacheWarmupCommand extends Command
 {
-    /**
-     * @var CacheWarmerInterface
-     */
     private $cacheWarmer;
-
-    /**
-     * @var string
-     */
     private $cacheDir;
 
-    /**
-     * @param CacheWarmerInterface $cacheWarmer
-     * @param string                $cacheDir
-     */
     public function __construct(CacheWarmerInterface $cacheWarmer, $cacheDir)
     {
         $this->cacheWarmer = $cacheWarmer;
@@ -31,9 +20,6 @@ class CacheWarmupCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this->setName('cache:warmup');
@@ -51,9 +37,6 @@ HELP
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);

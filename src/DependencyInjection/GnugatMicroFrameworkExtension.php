@@ -20,9 +20,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class GnugatMicroFrameworkExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $fileLocator = new FileLocator(__DIR__.'/../../config');
@@ -36,9 +33,6 @@ class GnugatMicroFrameworkExtension extends Extension
         $this->configureRoutingParameters($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     private function configureRoutingParameters(ContainerBuilder $container)
     {
         if (false === $container->hasParameter('router.resource')) {

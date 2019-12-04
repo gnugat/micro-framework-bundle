@@ -10,9 +10,6 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
  */
 class KernelCacheClearer implements CacheClearerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function clear($cacheDir)
     {
         $filesystem = new Filesystem();

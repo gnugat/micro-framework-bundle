@@ -13,14 +13,8 @@ namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus;
 
 class SayHello
 {
-    /**
-     * @var string
-     */
     public $name;
 
-    /**
-     * @param string $name
-     */
     public function __construct($name)
     {
         if (null === $name) {

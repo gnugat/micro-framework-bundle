@@ -17,9 +17,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RoutingResolverCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container)
     {
         if (false === $container->hasDefinition('routing.resolver')) {
