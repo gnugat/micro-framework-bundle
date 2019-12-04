@@ -31,7 +31,7 @@ class MonologBundleTest extends TestCase
      */
     public function it_has_logger()
     {
-        self::assertTrue($this->kernel->getContainer()->has('logger'));
+        self::assertTrue($this->kernel->getContainer()->has('is_monolog_bundle_registered'));
     }
 
     /**
@@ -39,7 +39,7 @@ class MonologBundleTest extends TestCase
      */
     public function it_can_log()
     {
-        $this->kernel->getContainer()->get('logger')->debug('Checked logger');
+        $this->kernel->getContainer()->get('is_monolog_bundle_registered')->debug('Checked logger');
 
         self::assertTrue(true, 'Failed to log');
     }
