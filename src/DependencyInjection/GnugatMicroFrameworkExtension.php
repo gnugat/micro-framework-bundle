@@ -42,7 +42,10 @@ class GnugatMicroFrameworkExtension extends Extension
     private function configureRoutingParameters(ContainerBuilder $container)
     {
         if (false === $container->hasParameter('router.resource')) {
-            $container->setParameter('router.resource', '%kernel.root_dir%/config/routings');
+            $container->setParameter(
+                'router.resource',
+                '%kernel.project_dir%/config/routings'
+            );
         }
         if (false === $container->hasParameter('router.resource_type')) {
             $container->setParameter('router.resource_type', 'directory');

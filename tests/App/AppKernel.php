@@ -29,7 +29,7 @@ class AppKernel extends Kernel
         );
     }
 
-    public function getRootDir()
+    public function getProjectDir()
     {
         return __DIR__;
     }
