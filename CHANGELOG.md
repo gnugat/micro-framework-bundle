@@ -2,7 +2,14 @@
 
 ## 0.6.0
 
+* Upgraded support to Symfony 5
+* Upgraded support to PHP 7.2 (accordingly with Symfony 5)
 * Upgraded tests to PHPUnit 8
+
+> **BC breaks**:
+>
+> * dropped support for Symfony 4
+> * dropped support for PHP 7.1 (accordingly with Symfony 5)
 
 ## 0.5.2: OS X cache clear
 
