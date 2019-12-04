@@ -22,6 +22,8 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SayHelloAwareCommand extends Command implements ContainerAwareInterface
 {
+    private const EXIT_SUCCESS = 0;
+
     use ContainerAwareTrait;
 
     protected function configure()
@@ -37,5 +39,7 @@ class SayHelloAwareCommand extends Command implements ContainerAwareInterface
         )->handle(new SayHello($input->getArgument('name')));
 
         $output->writeln($message);
+
+        return self::EXIT_SUCCESS;
     }
 }

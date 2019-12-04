@@ -1,8 +1,4 @@
 services:
-    'is_monolog_bundle_registered':
-        alias: 'logger'
-        public: true
-
     'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller\MyController':
         public: true
         arguments:
@@ -22,10 +18,20 @@ services:
 
     'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService':
         public: true
+    
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHandlerTester': ~
+    
+    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MonologTester':
+        public: true
+        arguments:
+            - '@logger'
+            - '@tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHandlerTester'
+        tags:
+            - { name: monolog.logger, channel: tester }
 
     'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler':
         public: true
         arguments:
             - '@logger'
         tags:
-            - { name: monolog.logger }
+            - { name: monolog.logger, channel: tester }

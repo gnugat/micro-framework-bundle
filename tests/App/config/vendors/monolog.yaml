@@ -1,5 +1,8 @@
 monolog:
     handlers:
-        main:
-            type: 'null'
-            level: ERROR
+        tester:
+            type: 'service'
+            id: 'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHandlerTester'
+            level: 'debug'
+            channels:
+                - 'tester'
