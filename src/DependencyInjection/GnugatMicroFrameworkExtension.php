@@ -24,10 +24,10 @@ class GnugatMicroFrameworkExtension extends Extension
     {
         $fileLocator = new FileLocator(__DIR__.'/../../config');
         $loader = new DirectoryLoader($container, $fileLocator);
-        $loader->setResolver(new LoaderResolver(array(
+        $loader->setResolver(new LoaderResolver([
             new YamlFileLoader($container, $fileLocator),
             $loader,
-        )));
+        ]));
         $loader->load('services/');
 
         $this->configureRoutingParameters($container);

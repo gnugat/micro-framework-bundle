@@ -36,7 +36,7 @@ class ServiceControllerResolver implements ControllerResolverInterface
             return $this->controllerResolver->getController($request);
         }
 
-        return array($this->container->get($parts[0]), $parts[1]);
+        return [$this->container->get($parts[0]), $parts[1]];
     }
 
     public function getArguments(Request $request, $controller)

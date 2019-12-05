@@ -18,7 +18,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        return array(
+        return [
             new \Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle(),
 
             // CustomBundle, similar to your own bundles
@@ -26,7 +26,7 @@ class AppKernel extends Kernel
 
             // Officially supported third party bundles
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
-        );
+        ];
     }
 
     public function getProjectDir()

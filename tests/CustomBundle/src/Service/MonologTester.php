@@ -11,8 +11,8 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service;
 
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHandlerTester;
 use Monolog\Logger;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHandlerTester;
 
 class MonologTester
 {

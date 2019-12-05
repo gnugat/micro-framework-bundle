@@ -25,7 +25,7 @@ class RoutingResolverCompilerPass implements CompilerPassInterface
         $routingResolver = $container->getDefinition('routing.resolver');
         $taggedServices = $container->findTaggedServiceIds('routing.loader');
         foreach ($taggedServices as $id => $attributes) {
-            $routingResolver->addMethodCall('addLoader', array(new Reference($id)));
+            $routingResolver->addMethodCall('addLoader', [new Reference($id)]);
         }
     }
 }

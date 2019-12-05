@@ -33,7 +33,9 @@ class MonologBundleTest extends TestCase
      */
     public function it_has_logger()
     {
-        $monologTester = $this->kernel->getContainer()->get(MonologTester::class);
+        $monologTester = $this->kernel->getContainer()->get(
+            MonologTester::class
+        );
 
         self::assertTrue($monologTester->hasMonolog());
     }
@@ -43,7 +45,9 @@ class MonologBundleTest extends TestCase
      */
     public function it_can_log()
     {
-        $monologTester = $this->kernel->getContainer()->get(MonologTester::class);
+        $monologTester = $this->kernel->getContainer()->get(
+            MonologTester::class
+        );
         $monologTester->log(self::LOG);
 
         self::assertSame(self::LOG, $monologTester->getLog());

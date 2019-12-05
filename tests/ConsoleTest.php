@@ -33,10 +33,10 @@ class ConsoleTest extends TestCase
      */
     public function it_runs_commands()
     {
-        $input = array(
+        $input = [
             'say-hello',
             'name' => 'Igor',
-        );
+        ];
 
         $statusCode = $this->app->run($input);
 
@@ -48,10 +48,10 @@ class ConsoleTest extends TestCase
      */
     public function it_runs_container_aware_commands()
     {
-        $input = array(
+        $input = [
             'say-hello-aware',
             'name' => 'Igor',
-        );
+        ];
 
         $statusCode = $this->app->run($input);
 

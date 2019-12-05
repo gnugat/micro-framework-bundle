@@ -31,7 +31,12 @@ class SayHelloCommand extends Command
     protected function configure()
     {
         $this->setName('say-hello');
-        $this->addArgument('name', InputArgument::OPTIONAL, 'Who should we say hello to?', 'World');
+        $this->addArgument(
+            'name',
+            InputArgument::OPTIONAL,
+            'Who should we say hello to?',
+            'World'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
