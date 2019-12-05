@@ -11,12 +11,13 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command;
 
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler;
+use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler;
 
 class SayHelloCommand extends Command
 {
@@ -46,5 +47,7 @@ class SayHelloCommand extends Command
         ));
 
         $output->writeln($message);
+
+        return ExitCode::SUCCESS;
     }
 }

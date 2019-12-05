@@ -11,14 +11,14 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command;
 
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
+use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
 
 class SayHelloAwareCommand extends Command implements ContainerAwareInterface
 {
@@ -40,6 +40,6 @@ class SayHelloAwareCommand extends Command implements ContainerAwareInterface
 
         $output->writeln($message);
 
-        return self::EXIT_SUCCESS;
+        return ExitCode::SUCCESS;
     }
 }

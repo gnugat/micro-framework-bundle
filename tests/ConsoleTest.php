@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
@@ -40,7 +41,11 @@ class ConsoleTest extends TestCase
 
         $statusCode = $this->app->run($input);
 
-        self::assertSame(0, $statusCode, $this->app->getDisplay());
+        self::assertSame(
+            ExitCode::SUCCESS,
+            $statusCode,
+            $this->app->getDisplay()
+        );
     }
 
     /**
@@ -55,6 +60,10 @@ class ConsoleTest extends TestCase
 
         $statusCode = $this->app->run($input);
 
-        self::assertSame(0, $statusCode, $this->app->getDisplay());
+        self::assertSame(
+            ExitCode::SUCCESS,
+            $statusCode,
+            $this->app->getDisplay()
+        );
     }
 }
