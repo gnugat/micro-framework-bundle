@@ -4,12 +4,12 @@
     "type": "symfony-bundle",
     "description": "Symfony Micro Framework Bundle",
     "keywords": ["symfony", "micro", "framework", "bundle"],
-    "homepage": "http://gnugat.github.io/micro-framework-bundle",
+    "homepage": "https://gnugat.github.io/micro-framework-bundle",
     "authors": [
         {
             "name": "Loïc Faugeron",
             "email": "faugeron.loic@gmail.com",
-            "homepage": "http://gnugat.github.io",
+            "homepage": "https://gnugat.github.io",
             "role": "Developer"
         }
     ],
