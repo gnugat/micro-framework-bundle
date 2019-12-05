@@ -23,7 +23,6 @@ Are they all compatible with `MicroFrameworkBundle`?
 
 First of all, here's a list of bundles `MicroFrameworkBundle` commits to support:
 
-* [league/tactician-bundle](https://tactician.thephpleague.com/)
 * [symfony/monolog-bundle](http://symfony.com/doc/current/cookbook/logging/monolog.html)
 
 These may change in the future.

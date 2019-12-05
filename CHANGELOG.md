@@ -10,6 +10,7 @@
 > **BC breaks**:
 >
 > * dropped support for Symfony 4
+> * dropped support for `league/tactician-bundle`
 > * dropped support for PHP 7.1 (accordingly with Symfony 5)
 
 ## 0.5.2: OS X cache clear
