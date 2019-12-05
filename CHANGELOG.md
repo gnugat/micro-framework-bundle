@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.6.0
+## 0.7.0: Symfony 5 support
 
 * Upgraded support to Symfony 5
 * Upgraded support to PHP 7.2 (accordingly with Symfony 5)
@@ -12,6 +12,8 @@
 > * dropped support for Symfony 4
 > * dropped support for `league/tactician-bundle`
 > * dropped support for PHP 7.1 (accordingly with Symfony 5)
+
+## 0.6.0: Symfony 4 support
 
 ## 0.5.2: OS X cache clear
 
