@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service;
+namespace Gnugat\MicroFrameworkBundle\Console;
 
-class MyService
+class ExitCode
 {
+    public const SUCCESS = 0;
+    public const ERROR = 1;
 }

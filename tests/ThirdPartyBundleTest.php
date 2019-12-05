@@ -14,12 +14,13 @@ namespace tests\Gnugat\MicroFrameworkBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService;
 
 class ThirdPartyBundleTest extends TestCase
 {
     private $kernel;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();
@@ -31,7 +32,7 @@ class ThirdPartyBundleTest extends TestCase
     public function it_can_load_bundle_services()
     {
         self::assertTrue($this->kernel->getContainer()->has(
-            'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService'
+            MyService::class
         ));
     }
 
@@ -44,6 +45,10 @@ class ThirdPartyBundleTest extends TestCase
 
         $response = $this->kernel->handle($request);
 
-        self::assertSame(200, $response->getStatusCode(), $response->getContent());
+        self::assertSame(
+            200,
+            $response->getStatusCode(),
+            $response->getContent()
+        );
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the gnugat/micro-framework-bundle package.
+ *
+ * (c) Loïc Faugeron <faugeron.loic@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Gnugat\MicroFrameworkBundle\Service;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
@@ -10,31 +19,19 @@ use Symfony\Component\Routing\Router;
  */
 class RouterCacheWarmer implements CacheWarmerInterface
 {
-    /**
-     * @var Router
-     */
     private $router;
 
-    /**
-     * @param Router $router
-     */
     public function __construct(Router $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function warmUp($cacheDir)
     {
         $this->router->getMatcher();
         $this->router->getGenerator();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptional()
     {
         return true;

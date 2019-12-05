@@ -11,10 +11,10 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller;
 
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
-use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler;
 
 class MyController
 {

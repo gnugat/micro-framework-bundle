@@ -20,33 +20,37 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class GnugatMicroFrameworkExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $fileLocator = new FileLocator(__DIR__.'/../../config');
         $loader = new DirectoryLoader($container, $fileLocator);
-        $loader->setResolver(new LoaderResolver(array(
+        $loader->setResolver(new LoaderResolver([
             new YamlFileLoader($container, $fileLocator),
             $loader,
-        )));
+        ]));
         $loader->load('services/');
 
         $this->configureRoutingParameters($container);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
     private function configureRoutingParameters(ContainerBuilder $container)
     {
         if (false === $container->hasParameter('router.resource')) {
-            $container->setParameter('router.resource', '%kernel.root_dir%/config/routings');
+            $container->setParameter(
+                'router.resource',
+                '%kernel.project_dir%/config/routings'
+            );
         }
         if (false === $container->hasParameter('router.resource_type')) {
             $container->setParameter('router.resource_type', 'directory');
         }
-        $container->setParameter('router.cache_class_prefix', $container->getParameter('kernel.name').ucfirst($container->getParameter('kernel.environment')));
+        $kernelEnvironment = $container->getParameter('kernel.environment');
+        $kernelContainerClass = $container->getParameter(
+            'kernel.container_class'
+        );
+        $container->setParameter(
+            'router.cache_class_prefix',
+            $kernelContainerClass.ucfirst($kernelEnvironment)
+        );
     }
 }

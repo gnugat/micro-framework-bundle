@@ -20,29 +20,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServiceControllerResolver implements ControllerResolverInterface
 {
-    /**
-     * @var ContainerInterface
-     */
     private $container;
-
-    /**
-     * @var ControllerResolverInterface
-     */
     private $controllerResolver;
 
-    /**
-     * @param ContainerInterface          $container
-     * @param ControllerResolverInterface $parser
-     */
     public function __construct(ContainerInterface $container, ControllerResolverInterface $controllerResolver)
     {
         $this->container = $container;
         $this->controllerResolver = $controllerResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getController(Request $request)
     {
         $parts = explode(':', $request->attributes->get('_controller', ''));
@@ -50,12 +36,9 @@ class ServiceControllerResolver implements ControllerResolverInterface
             return $this->controllerResolver->getController($request);
         }
 
-        return array($this->container->get($parts[0]), $parts[1]);
+        return [$this->container->get($parts[0]), $parts[1]];
     }
 
-     /**
-     * {@inheritdoc}
-     */
     public function getArguments(Request $request, $controller)
     {
         return $this->controllerResolver->getArguments($request, $controller);

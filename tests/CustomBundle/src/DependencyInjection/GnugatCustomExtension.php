@@ -18,9 +18,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class GnugatCustomExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $fileLocator = new FileLocator(__DIR__.'/../../config');

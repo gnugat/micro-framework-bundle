@@ -11,16 +11,18 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
-use Gnugat\MicroFrameworkBundle\Tests\Bundle\CommandBus\SayHello;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
+use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MonologTester;
 
 class MonologBundleTest extends TestCase
 {
+    private const LOG = 'Monolog is working';
+
     private $kernel;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();
@@ -31,7 +33,11 @@ class MonologBundleTest extends TestCase
      */
     public function it_has_logger()
     {
-        self::assertTrue($this->kernel->getContainer()->has('is_monolog_bundle_registered'));
+        $monologTester = $this->kernel->getContainer()->get(
+            MonologTester::class
+        );
+
+        self::assertTrue($monologTester->hasMonolog());
     }
 
     /**
@@ -39,8 +45,11 @@ class MonologBundleTest extends TestCase
      */
     public function it_can_log()
     {
-        $this->kernel->getContainer()->get('is_monolog_bundle_registered')->debug('Checked logger');
+        $monologTester = $this->kernel->getContainer()->get(
+            MonologTester::class
+        );
+        $monologTester->log(self::LOG);
 
-        self::assertTrue(true, 'Failed to log');
+        self::assertSame(self::LOG, $monologTester->getLog());
     }
 }

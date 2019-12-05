@@ -24,45 +24,25 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class KernelApplication extends Application
 {
-    /**
-     * @var KernelInterface
-     */
     private $kernel;
-
-    /**
-     * @var bool
-     */
     private $commandsRegistered = false;
+    private $registrationErrors = [];
 
-    /**
-     * @var array
-     */
-    private $registrationErrors = array();
-
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
 
-        parent::__construct('Micro Symfony', Kernel::VERSION.' - '.$kernel->getName().'/'.$kernel->getEnvironment().($kernel->isDebug() ? '/debug' : ''));
+        parent::__construct('Micro Symfony', Kernel::VERSION);
 
         $this->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', $kernel->getEnvironment()));
         $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
 	
-    /**
-     * @return KernelInterface
-     */
     public function getKernel()
     {
         return $this->kernel;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->kernel->boot();
@@ -76,9 +56,6 @@ class KernelApplication extends Application
         return parent::doRun($input, $output);
     }
     
-    /**
-     * {@inheritdoc}
-     */
     public function find($name)
     {
         $this->registerCommands();
@@ -86,9 +63,6 @@ class KernelApplication extends Application
         return parent::find($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($name)
     {
         $this->registerCommands();
@@ -102,9 +76,6 @@ class KernelApplication extends Application
         return $command;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function all($namespace = null)
     {
         $this->registerCommands();
@@ -112,9 +83,6 @@ class KernelApplication extends Application
         return parent::all($namespace);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function add(Command $command)
     {
         $this->registerCommands();
@@ -151,7 +119,7 @@ class KernelApplication extends Application
         }
 
         if ($container->hasParameter('console.command.ids')) {
-            $lazyCommandIds = array ();
+            $lazyCommandIds = [];
             if ($container->hasParameter('console.lazy_command.ids')) {
                 $lazyCommandIds = $container->getParameter('console.lazy_command.ids');
             }
@@ -180,6 +148,6 @@ class KernelApplication extends Application
             $this->doRenderException($error, $output);
         }
 
-        $this->registrationErrors = array();
+        $this->registrationErrors = [];
     }
 }

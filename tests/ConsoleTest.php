@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
@@ -20,7 +21,7 @@ class ConsoleTest extends TestCase
 {
     private $app;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $kernel = new AppKernel('test', false);
         $application = new KernelApplication($kernel);
@@ -33,14 +34,18 @@ class ConsoleTest extends TestCase
      */
     public function it_runs_commands()
     {
-        $input = array(
+        $input = [
             'say-hello',
             'name' => 'Igor',
-        );
+        ];
 
         $statusCode = $this->app->run($input);
 
-        self::assertSame(0, $statusCode, $this->app->getDisplay());
+        self::assertSame(
+            ExitCode::SUCCESS,
+            $statusCode,
+            $this->app->getDisplay()
+        );
     }
 
     /**
@@ -48,13 +53,17 @@ class ConsoleTest extends TestCase
      */
     public function it_runs_container_aware_commands()
     {
-        $input = array(
+        $input = [
             'say-hello-aware',
             'name' => 'Igor',
-        );
+        ];
 
         $statusCode = $this->app->run($input);
 
-        self::assertSame(0, $statusCode, $this->app->getDisplay());
+        self::assertSame(
+            ExitCode::SUCCESS,
+            $statusCode,
+            $this->app->getDisplay()
+        );
     }
 }

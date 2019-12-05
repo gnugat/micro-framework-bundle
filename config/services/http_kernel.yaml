@@ -30,7 +30,7 @@ services:
         class: 'Symfony\Component\HttpKernel\Config\FileLocator'
         arguments:
             - '@kernel'
-            - '%kernel.root_dir%/Resources'
+            - '%kernel.project_dir%/Resources'
 
     'Symfony\Component\HttpKernel\Config\FileLocator':
         alias: file_locator

@@ -19,7 +19,7 @@ class ServiceTest extends TestCase
 {
     private $kernel;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();
@@ -30,7 +30,9 @@ class ServiceTest extends TestCase
      */
     public function it_provides_event_dispatcher()
     {
-        self::assertTrue($this->kernel->getContainer()->has('event_dispatcher'));
+        self::assertTrue(
+            $this->kernel->getContainer()->has('event_dispatcher')
+        );
     }
 
     /**
@@ -38,7 +40,9 @@ class ServiceTest extends TestCase
      */
     public function it_provides_http_kernel()
     {
-        self::assertTrue($this->kernel->getContainer()->has('http_kernel'));
+        self::assertTrue(
+            $this->kernel->getContainer()->has('http_kernel')
+        );
     }
 
     /**
@@ -46,6 +50,8 @@ class ServiceTest extends TestCase
      */
     public function it_provides_request_stack()
     {
-        self::assertTrue($this->kernel->getContainer()->has('request_stack'));
+        self::assertTrue(
+            $this->kernel->getContainer()->has('request_stack')
+        );
     }
 }
