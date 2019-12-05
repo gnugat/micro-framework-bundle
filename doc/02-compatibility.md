@@ -117,6 +117,7 @@ To follow the "add what you need" micro framework philosohpy, there are many com
 present in `FrameworkBundle` that are absent from `MicroFrameworkBundle`:
 
 * `symfony/asset`
+* `symfony/cache`
 * `symfony/security-core`
 * `symfony/security-csrf`
 * `symfony/stopwatch`
