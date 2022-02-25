@@ -20,7 +20,7 @@ class MonologBundleTest extends TestCase
 {
     private const LOG = 'Monolog is working';
 
-    private $kernel;
+    private AppKernel $kernel;
 
     protected function setUp(): void
     {
@@ -31,7 +31,7 @@ class MonologBundleTest extends TestCase
     /**
      * @test
      */
-    public function it_has_logger()
+    public function it_has_logger(): void
     {
         $monologTester = $this->kernel->getContainer()->get(
             MonologTester::class
@@ -43,7 +43,7 @@ class MonologBundleTest extends TestCase
     /**
      * @test
      */
-    public function it_can_log()
+    public function it_can_log(): void
     {
         $monologTester = $this->kernel->getContainer()->get(
             MonologTester::class

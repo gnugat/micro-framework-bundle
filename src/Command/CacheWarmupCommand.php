@@ -20,13 +20,10 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class CacheWarmupCommand extends Command
 {
-    private $cacheWarmer;
-    private $cacheDir;
-
-    public function __construct(CacheWarmerInterface $cacheWarmer, $cacheDir)
-    {
-        $this->cacheWarmer = $cacheWarmer;
-        $this->cacheDir = $cacheDir;
+    public function __construct(
+        private CacheWarmerInterface $cacheWarmer,
+        private string $cacheDir
+    ) {
         parent::__construct();
     }
 

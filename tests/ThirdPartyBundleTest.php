@@ -18,7 +18,7 @@ use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService;
 
 class ThirdPartyBundleTest extends TestCase
 {
-    private $kernel;
+    private AppKernel $kernel;
 
     protected function setUp(): void
     {
@@ -29,7 +29,7 @@ class ThirdPartyBundleTest extends TestCase
     /**
      * @test
      */
-    public function it_can_load_bundle_services()
+    public function it_can_load_bundle_services(): void
     {
         self::assertTrue($this->kernel->getContainer()->has(
             MyService::class
@@ -39,7 +39,7 @@ class ThirdPartyBundleTest extends TestCase
     /**
      * @test
      */
-    public function it_can_load_bundle_controllers()
+    public function it_can_load_bundle_controllers(): void
     {
         $request = Request::create('/?name=igor');
 

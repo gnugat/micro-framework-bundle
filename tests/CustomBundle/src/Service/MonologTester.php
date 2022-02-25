@@ -16,15 +16,10 @@ use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog\MonologHa
 
 class MonologTester
 {
-    private $logger;
-    private $monologHandlerTester;
-
     public function __construct(
-        Logger $logger,
-        MonologHandlerTester $monologHandlerTester
+        private Logger $logger,
+        private MonologHandlerTester $monologHandlerTester,
     ) {
-        $this->logger = $logger;
-        $this->monologHandlerTester = $monologHandlerTester;
     }
 
     public function hasMonolog(): bool
