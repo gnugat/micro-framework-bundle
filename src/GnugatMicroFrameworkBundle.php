@@ -16,16 +16,15 @@ use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\CacheWarmerComp
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\ConsoleCommandCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\RoutingResolverCompilerPass;
 use Symfony\Component\Config\Resource\ClassExistenceResource;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class GnugatMicroFrameworkBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -49,7 +48,7 @@ class GnugatMicroFrameworkBundle extends Bundle
         string $class,
         string $type = PassConfig::TYPE_BEFORE_OPTIMIZATION,
         int $priority = 0,
-    ) {
+    ): void {
         $container->addResource(new ClassExistenceResource($class));
 
         if (class_exists($class)) {

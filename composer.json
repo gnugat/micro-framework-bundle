@@ -33,6 +33,7 @@
         "symfony/routing": "^6.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.6",
         "phpunit/phpunit": "^9.0",
         "symfony/monolog-bridge": "^6.0",
         "symfony/monolog-bundle": "^3.0",

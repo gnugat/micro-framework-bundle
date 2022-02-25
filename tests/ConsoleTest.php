@@ -44,7 +44,7 @@ class ConsoleTest extends TestCase
         self::assertSame(
             ExitCode::SUCCESS,
             $statusCode,
-            $this->app->getDisplay()
+            $this->app->getDisplay(),
         );
     }
 
@@ -63,7 +63,7 @@ class ConsoleTest extends TestCase
         self::assertSame(
             ExitCode::SUCCESS,
             $statusCode,
-            $this->app->getDisplay()
+            $this->app->getDisplay(),
         );
     }
 }

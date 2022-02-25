@@ -11,9 +11,9 @@
 
 namespace Gnugat\MicroFrameworkBundle\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Resolves controllers defined as services (service:method notation).
@@ -22,7 +22,7 @@ class ServiceControllerResolver implements ControllerResolverInterface
 {
     public function __construct(
         private ContainerInterface $container,
-        private ControllerResolverInterface $controllerResolver
+        private ControllerResolverInterface $controllerResolver,
     ) {
     }
 

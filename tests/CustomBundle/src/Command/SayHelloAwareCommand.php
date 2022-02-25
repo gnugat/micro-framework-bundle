@@ -22,11 +22,10 @@ use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHello;
 
 class SayHelloAwareCommand extends Command implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
     private const EXIT_SUCCESS = 0;
 
-    use ContainerAwareTrait;
-
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('say-hello-aware');
         $this->addArgument('name', InputArgument::OPTIONAL, 'Who should we say hello to?', 'World');
@@ -35,7 +34,7 @@ class SayHelloAwareCommand extends Command implements ContainerAwareInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $message = $this->container->get(
-            'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler'
+            'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler',
         )->handle(new SayHello($input->getArgument('name')));
 
         $output->writeln($message);

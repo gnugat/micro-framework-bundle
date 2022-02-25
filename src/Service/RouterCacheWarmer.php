@@ -20,11 +20,11 @@ use Symfony\Component\Routing\Router;
 class RouterCacheWarmer implements CacheWarmerInterface
 {
     public function __construct(
-        private Router $router
+        private Router $router,
     ) {
     }
 
-    public function warmUp(string $cacheDir)
+    public function warmUp(string $cacheDir): void
     {
         $this->router->getMatcher();
         $this->router->getGenerator();

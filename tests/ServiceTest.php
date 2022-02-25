@@ -12,7 +12,6 @@
 namespace tests\Gnugat\MicroFrameworkBundle;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 
 class ServiceTest extends TestCase
@@ -31,7 +30,7 @@ class ServiceTest extends TestCase
     public function it_provides_event_dispatcher(): void
     {
         self::assertTrue(
-            $this->kernel->getContainer()->has('event_dispatcher')
+            $this->kernel->getContainer()->has('event_dispatcher'),
         );
     }
 
@@ -41,7 +40,7 @@ class ServiceTest extends TestCase
     public function it_provides_http_kernel(): void
     {
         self::assertTrue(
-            $this->kernel->getContainer()->has('http_kernel')
+            $this->kernel->getContainer()->has('http_kernel'),
         );
     }
 
@@ -51,7 +50,7 @@ class ServiceTest extends TestCase
     public function it_provides_request_stack(): void
     {
         self::assertTrue(
-            $this->kernel->getContainer()->has('request_stack')
+            $this->kernel->getContainer()->has('request_stack'),
         );
     }
 }

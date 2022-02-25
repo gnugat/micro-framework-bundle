@@ -29,21 +29,21 @@ class SayHelloCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('say-hello');
         $this->addArgument(
             'name',
             InputArgument::OPTIONAL,
             'Who should we say hello to?',
-            'World'
+            'World',
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $message = $this->sayHelloHandler->handle(new SayHello(
-            $input->getArgument('name')
+            $input->getArgument('name'),
         ));
 
         $output->writeln($message);
