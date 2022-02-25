@@ -16,7 +16,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         return [
             new \Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle(),
@@ -29,17 +29,17 @@ class AppKernel extends Kernel
         ];
     }
 
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return __DIR__;
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return __DIR__.'/var/cache/'.$this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return __DIR__.'/var/logs';
     }
