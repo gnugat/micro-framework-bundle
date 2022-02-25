@@ -62,6 +62,37 @@
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="changelog">CHANGELOG</h1>
+<h2 id="080-symfony-6-support">0.8.0: Symfony 6 support</h2>
+<ul>
+<li>Upgraded support to Symfony 6</li>
+<li>Upgraded support to PHP 8.0 (accordingly with Symfony 6)</li>
+<li>Upgraded tests to PHPUnit 9</li>
+<li>Added PHP CS Fixer for development purposes</li>
+</ul>
+<h2 id="070-symfony-5-support">0.7.0: Symfony 5 support</h2>
+<ul>
+<li>Upgraded support to Symfony 5</li>
+<li>Upgraded support to PHP 7.2 (accordingly with Symfony 5)</li>
+<li>Upgraded tests to PHPUnit 8</li>
+<li>added <code>Gnugat\MicroFrameworkBundle\Console\ExitCode</code></li>
+</ul>
+<blockquote>
+<p><strong>BC breaks</strong>:</p>
+<ul>
+<li>dropped support for Symfony 4</li>
+<li>dropped support for <code>league/tactician-bundle</code></li>
+<li>dropped support for PHP 7.1 (accordingly with Symfony 5)</li>
+</ul>
+</blockquote>
+<h2 id="060-symfony-4-support">0.6.0: Symfony 4 support</h2>
+<h2 id="052-os-x-cache-clear">0.5.2: OS X cache clear</h2>
+<ul>
+<li>Used <code>Filesystem</code> to make cache clear compatible with OS X (thanks @Edwin-Luijten)</li>
+</ul>
+<h2 id="051-get-kernel">0.5.1: Get Kernel</h2>
+<ul>
+<li>added <code>getKernel()</code> to <code>KernelApplication</code> (thanks @Edwin-Luijten)</li>
+</ul>
 <h2 id="050-cache-clear-amp-warmup">0.5.0: Cache clear &amp; warmup</h2>
 <ul>
 <li>added <code>cache:warmup</code> command</li>
