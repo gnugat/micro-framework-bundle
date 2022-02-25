@@ -20,7 +20,7 @@
         "psr-4": { "tests\\Gnugat\\MicroFrameworkBundle\\": "tests/" }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^8.0",
         "symfony/config": "^5.0",
         "symfony/console": "^5.0",
         "symfony/dependency-injection": "^5.0",

@@ -20,16 +20,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServiceControllerResolver implements ControllerResolverInterface
 {
-    private $container;
-    private $controllerResolver;
-
-    public function __construct(ContainerInterface $container, ControllerResolverInterface $controllerResolver)
-    {
-        $this->container = $container;
-        $this->controllerResolver = $controllerResolver;
+    public function __construct(
+        private ContainerInterface $container,
+        private ControllerResolverInterface $controllerResolver
+    ) {
     }
 
-    public function getController(Request $request)
+    public function getController(Request $request): callable|false
     {
         $parts = explode(':', $request->attributes->get('_controller', ''));
         if (2 !== count($parts)) {

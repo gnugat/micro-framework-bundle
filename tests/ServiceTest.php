@@ -17,7 +17,7 @@ use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 
 class ServiceTest extends TestCase
 {
-    private $kernel;
+    private AppKernel $kernel;
 
     protected function setUp(): void
     {
@@ -28,7 +28,7 @@ class ServiceTest extends TestCase
     /**
      * @test
      */
-    public function it_provides_event_dispatcher()
+    public function it_provides_event_dispatcher(): void
     {
         self::assertTrue(
             $this->kernel->getContainer()->has('event_dispatcher')
@@ -38,7 +38,7 @@ class ServiceTest extends TestCase
     /**
      * @test
      */
-    public function it_provides_http_kernel()
+    public function it_provides_http_kernel(): void
     {
         self::assertTrue(
             $this->kernel->getContainer()->has('http_kernel')
@@ -48,7 +48,7 @@ class ServiceTest extends TestCase
     /**
      * @test
      */
-    public function it_provides_request_stack()
+    public function it_provides_request_stack(): void
     {
         self::assertTrue(
             $this->kernel->getContainer()->has('request_stack')

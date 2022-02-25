@@ -24,14 +24,12 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class KernelApplication extends Application
 {
-    private $kernel;
-    private $commandsRegistered = false;
-    private $registrationErrors = [];
+    private bool $commandsRegistered = false;
+    private array $registrationErrors = [];
 
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-
+    public function __construct(
+        private KernelInterface $kernel,
+    ) {
         parent::__construct('Micro Symfony', Kernel::VERSION);
 
         $this->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', $kernel->getEnvironment()));

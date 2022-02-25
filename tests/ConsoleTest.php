@@ -19,7 +19,7 @@ use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 
 class ConsoleTest extends TestCase
 {
-    private $app;
+    private ApplicationTester $app;
 
     protected function setUp(): void
     {
@@ -32,7 +32,7 @@ class ConsoleTest extends TestCase
     /**
      * @test
      */
-    public function it_runs_commands()
+    public function it_runs_commands(): void
     {
         $input = [
             'say-hello',
@@ -51,7 +51,7 @@ class ConsoleTest extends TestCase
     /**
      * @test
      */
-    public function it_runs_container_aware_commands()
+    public function it_runs_container_aware_commands(): void
     {
         $input = [
             'say-hello-aware',
