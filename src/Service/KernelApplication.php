@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class KernelApplication extends Application
 {
@@ -35,7 +35,7 @@ class KernelApplication extends Application
         $this->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', $kernel->getEnvironment()));
         $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
-	
+
     public function getKernel()
     {
         return $this->kernel;
@@ -53,7 +53,7 @@ class KernelApplication extends Application
 
         return parent::doRun($input, $output);
     }
-    
+
     public function find($name)
     {
         $this->registerCommands();
@@ -88,7 +88,7 @@ class KernelApplication extends Application
         return parent::add($command);
     }
 
-    private function registerCommands()
+    private function registerCommands(): void
     {
         if ($this->commandsRegistered) {
             return;
@@ -134,7 +134,7 @@ class KernelApplication extends Application
         }
     }
 
-    private function renderRegistrationErrors(InputInterface $input, OutputInterface $output)
+    private function renderRegistrationErrors(InputInterface $input, OutputInterface $output): void
     {
         if ($output instanceof ConsoleOutputInterface) {
             $output = $output->getErrorOutput();

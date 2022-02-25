@@ -15,11 +15,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 
 /**
- * Removes the cache directory (usually `var/cache/<env>`)
+ * Removes the cache directory (usually `var/cache/<env>`).
  */
 class KernelCacheClearer implements CacheClearerInterface
 {
-    public function clear(string $cacheDir)
+    public function clear(string $cacheDir): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($cacheDir);

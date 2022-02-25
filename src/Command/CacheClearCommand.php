@@ -27,21 +27,20 @@ class CacheClearCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('cache:clear');
         $this->setDescription('Clears the cache');
         $this->setHelp(<<<'HELP'
-Executes all <info>CacheClearerInterface</info> implementations registered with the <info>kernel.cache_clearer</info> tag.
-It will for example remove the cache directry.
+            Executes all <info>CacheClearerInterface</info> implementations registered with the <info>kernel.cache_clearer</info> tag.
+            It will for example remove the cache directry.
 
-After running it, you might want to warm up the cache:
+            After running it, you might want to warm up the cache:
 
-    php bin/console cache:clear
-    php bin/console cache:warmup
-HELP
-            )
-        ;
+                php bin/console cache:clear
+                php bin/console cache:warmup
+            HELP
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

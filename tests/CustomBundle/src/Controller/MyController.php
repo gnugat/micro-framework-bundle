@@ -28,7 +28,7 @@ class MyController
     public function helloWorld(Request $request): Response
     {
         $message = $this->sayHelloHandler->handle(new SayHello(
-            $request->query->get('name')
+            $request->query->get('name'),
         ));
 
         return new Response($message);

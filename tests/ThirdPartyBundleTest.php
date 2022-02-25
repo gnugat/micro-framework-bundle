@@ -32,7 +32,7 @@ class ThirdPartyBundleTest extends TestCase
     public function it_can_load_bundle_services(): void
     {
         self::assertTrue($this->kernel->getContainer()->has(
-            MyService::class
+            MyService::class,
         ));
     }
 
@@ -48,7 +48,7 @@ class ThirdPartyBundleTest extends TestCase
         self::assertSame(
             200,
             $response->getStatusCode(),
-            $response->getContent()
+            $response->getContent(),
         );
     }
 }

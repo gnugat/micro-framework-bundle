@@ -22,25 +22,25 @@ class CacheWarmupCommand extends Command
 {
     public function __construct(
         private CacheWarmerInterface $cacheWarmer,
-        private string $cacheDir
+        private string $cacheDir,
     ) {
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('cache:warmup');
         $this->setDescription('Warms up an empty cache');
         $this->setHelp(<<<'HELP'
-Executes all <info>CacheWarmerInterface</info> implementations registered with the <info>kernel.cache_warmer</info> tag.
-It will for example create an optimized <info>UrlMatcherInterface</info> and <info>UrlGeneratorInterface</info>.
+            Executes all <info>CacheWarmerInterface</info> implementations registered with the <info>kernel.cache_warmer</info> tag.
+            It will for example create an optimized <info>UrlMatcherInterface</info> and <info>UrlGeneratorInterface</info>.
 
-To run it, make sure the cache is empty first:
+            To run it, make sure the cache is empty first:
 
-    php bin/console cache:clear
-    php bin/console cache:warmup
+                php bin/console cache:clear
+                php bin/console cache:warmup
 
-HELP
+            HELP
         );
     }
 
