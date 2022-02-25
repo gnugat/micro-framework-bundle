@@ -33,7 +33,7 @@
         "symfony/routing": "^6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.0",
         "symfony/monolog-bridge": "^6.0",
         "symfony/monolog-bundle": "^3.0",
         "symfony/yaml": "^6.0"
