@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.8.0: Symfony 6 support
+
+* Upgraded support to Symfony 6
+* Upgraded support to PHP 8.0 (accordingly with Symfony 6)
+* Upgraded tests to PHPUnit 9
+* Added PHP CS Fixer for development purposes
+
 ## 0.7.0: Symfony 5 support
 
 * Upgraded support to Symfony 5
