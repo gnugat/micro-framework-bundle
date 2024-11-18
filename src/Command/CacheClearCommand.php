@@ -40,7 +40,7 @@ class CacheClearCommand extends Command
                 php bin/console cache:clear
                 php bin/console cache:warmup
             HELP
-            );
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
