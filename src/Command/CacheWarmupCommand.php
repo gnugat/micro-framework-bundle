@@ -26,6 +26,7 @@ class CacheWarmupCommand extends Command
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this->setName('cache:warmup');
@@ -43,6 +44,7 @@ class CacheWarmupCommand extends Command
         );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

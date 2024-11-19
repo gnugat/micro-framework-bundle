@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CacheClearerCompilerPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition('cache_clearer')) {

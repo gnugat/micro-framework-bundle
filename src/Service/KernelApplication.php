@@ -35,11 +35,12 @@ class KernelApplication extends Application
         $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
 
-    public function getKernel()
+    public function getKernel(): KernelInterface
     {
         return $this->kernel;
     }
 
+    #[\Override]
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $this->kernel->boot();
@@ -53,6 +54,7 @@ class KernelApplication extends Application
         return parent::doRun($input, $output);
     }
 
+    #[\Override]
     public function find(string $name): Command
     {
         $this->registerCommands();
@@ -60,6 +62,7 @@ class KernelApplication extends Application
         return parent::find($name);
     }
 
+    #[\Override]
     public function get(string $name): Command
     {
         $this->registerCommands();
@@ -69,6 +72,7 @@ class KernelApplication extends Application
         return $command;
     }
 
+    #[\Override]
     public function all(?string $namespace = null): array
     {
         $this->registerCommands();
@@ -76,6 +80,7 @@ class KernelApplication extends Application
         return parent::all($namespace);
     }
 
+    #[\Override]
     public function add(Command $command): ?Command
     {
         $this->registerCommands();

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.1: routing attributes
+
+* added support for routing attributes (`#[Route()]`)
+
 ## 0.9.0: Symfony 7 support
 
 * Upgraded support to Symfony 6

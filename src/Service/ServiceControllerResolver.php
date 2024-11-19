@@ -26,6 +26,7 @@ class ServiceControllerResolver implements ControllerResolverInterface
     ) {
     }
 
+    #[\Override]
     public function getController(Request $request): callable|false
     {
         $parts = explode(':', $request->attributes->get('_controller', ''));
@@ -34,10 +35,5 @@ class ServiceControllerResolver implements ControllerResolverInterface
         }
 
         return [$this->container->get($parts[0]), $parts[1]];
-    }
-
-    public function getArguments(Request $request, $controller)
-    {
-        return $this->controllerResolver->getArguments($request, $controller);
     }
 }

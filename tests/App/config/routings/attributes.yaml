@@ -1,0 +1,9 @@
+controllers:
+    resource:
+        path: ../../Controller/
+        namespace: tests\Gnugat\MicroFrameworkBundle\App\Controller       
+    type: attribute
+
+kernel:
+    resource: tests\Gnugat\MicroFrameworkBundle\App\AppKernel
+    type: attribute
