@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.64",
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^11.0",
         "symfony/monolog-bridge": "^7.0",
         "symfony/monolog-bundle": "^3.10",
         "symfony/yaml": "^7.0"

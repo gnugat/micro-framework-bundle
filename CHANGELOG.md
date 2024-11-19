@@ -4,6 +4,7 @@
 
 * Upgraded support to Symfony 6
 * Upgraded support to PHP 8.2 (accordingly with Symfony 7)
+* Upgraded tests to PHPUnit 11
 
 - Removed ExitCode (use Symfony\Component\Console\Command constants instead)
 - Removed support for `ContainerAwareCommand`, as it's been removed from Symfony 7

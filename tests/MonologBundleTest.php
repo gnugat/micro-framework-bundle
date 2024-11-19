@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MonologTester;
@@ -27,9 +28,7 @@ class MonologBundleTest extends TestCase
         $this->kernel->boot();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_has_logger(): void
     {
         $monologTester = $this->kernel->getContainer()->get(
@@ -39,9 +38,7 @@ class MonologBundleTest extends TestCase
         self::assertTrue($monologTester->hasMonolog());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_log(): void
     {
         $monologTester = $this->kernel->getContainer()->get(

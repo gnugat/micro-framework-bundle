@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 
@@ -24,9 +25,7 @@ class ServiceTest extends TestCase
         $this->kernel->boot();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_provides_event_dispatcher(): void
     {
         self::assertTrue(
@@ -34,9 +33,7 @@ class ServiceTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_provides_http_kernel(): void
     {
         self::assertTrue(
@@ -44,9 +41,7 @@ class ServiceTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_provides_request_stack(): void
     {
         self::assertTrue(

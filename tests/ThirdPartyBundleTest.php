@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
@@ -26,9 +27,7 @@ class ThirdPartyBundleTest extends TestCase
         $this->kernel->boot();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_load_bundle_services(): void
     {
         self::assertTrue($this->kernel->getContainer()->has(
@@ -36,9 +35,7 @@ class ThirdPartyBundleTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_can_load_bundle_controllers(): void
     {
         $request = Request::create('/?name=igor');

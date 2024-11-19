@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
+use PHPUnit\Framework\Attributes\Test;
 use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
@@ -29,9 +30,7 @@ class ConsoleTest extends TestCase
         $this->app = new ApplicationTester($application);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_runs_commands(): void
     {
         $input = [
