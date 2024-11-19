@@ -11,7 +11,6 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command;
 
-use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +39,7 @@ class SayHelloCommand extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $message = $this->sayHelloHandler->handle(new SayHello(
             $input->getArgument('name'),
@@ -48,6 +47,6 @@ class SayHelloCommand extends Command
 
         $output->writeln($message);
 
-        return ExitCode::SUCCESS;
+        return Command::SUCCESS;
     }
 }

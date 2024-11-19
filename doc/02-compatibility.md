@@ -97,15 +97,7 @@ No extensions for HttpCache are provided and ESI/fragements are not registered.
 
 ### Console
 
-While bundles that have `Commands` extending `ContainerAwareCommand` still require
-`FrameworkBundle`, they can be compatible with `MicroFrameworkBundle`.
-
-> **Note**: To drop the dependency on `FrameworkBundle`, the following solutions can be followed:
->
-> * implement `ContainerAwareInterface` and use `ContainerAwareTrait`
-> * or register as a service and inject explicitely the dependencies
-
-Finally, `FrameworkBundle` provides its own Console `Application` that wraps the
+`FrameworkBundle` provides its own Console `Application` that wraps the
 Kernel to access its registered bundles.
 
 > **Note**: Some bundles, like `DoctrineBundle`, have a direct dependency on

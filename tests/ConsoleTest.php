@@ -11,9 +11,9 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
-use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
 
@@ -38,30 +38,10 @@ class ConsoleTest extends TestCase
             'say-hello',
             'name' => 'Igor',
         ];
-
         $statusCode = $this->app->run($input);
 
         self::assertSame(
-            ExitCode::SUCCESS,
-            $statusCode,
-            $this->app->getDisplay(),
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function it_runs_container_aware_commands(): void
-    {
-        $input = [
-            'say-hello-aware',
-            'name' => 'Igor',
-        ];
-
-        $statusCode = $this->app->run($input);
-
-        self::assertSame(
-            ExitCode::SUCCESS,
+            Command::SUCCESS,
             $statusCode,
             $this->app->getDisplay(),
         );
