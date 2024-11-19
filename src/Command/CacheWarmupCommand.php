@@ -11,7 +11,6 @@
 
 namespace Gnugat\MicroFrameworkBundle\Command;
 
-use Gnugat\MicroFrameworkBundle\Console\ExitCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,7 +43,7 @@ class CacheWarmupCommand extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->comment("Warming up the cache (<info>{$this->cacheDir}</info>)");
@@ -53,6 +52,6 @@ class CacheWarmupCommand extends Command
 
         $io->success('Cache warmed up');
 
-        return ExitCode::SUCCESS;
+        return Command::SUCCESS;
     }
 }

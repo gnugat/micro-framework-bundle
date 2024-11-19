@@ -17,7 +17,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -41,7 +40,7 @@ class KernelApplication extends Application
         return $this->kernel;
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $this->kernel->boot();
 
@@ -54,34 +53,30 @@ class KernelApplication extends Application
         return parent::doRun($input, $output);
     }
 
-    public function find($name)
+    public function find(string $name): Command
     {
         $this->registerCommands();
 
         return parent::find($name);
     }
 
-    public function get($name)
+    public function get(string $name): Command
     {
         $this->registerCommands();
 
         $command = parent::get($name);
 
-        if ($command instanceof ContainerAwareInterface) {
-            $command->setContainer($this->kernel->getContainer());
-        }
-
         return $command;
     }
 
-    public function all($namespace = null)
+    public function all(?string $namespace = null): array
     {
         $this->registerCommands();
 
         return parent::all($namespace);
     }
 
-    public function add(Command $command)
+    public function add(Command $command): ?Command
     {
         $this->registerCommands();
 

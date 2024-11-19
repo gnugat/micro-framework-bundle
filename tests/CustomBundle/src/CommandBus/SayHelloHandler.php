@@ -15,11 +15,9 @@ use Psr\Log\LoggerInterface;
 
 class SayHelloHandler
 {
-    private $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private LoggerInterface $logger,
+    ) {
     }
 
     public function handle(SayHello $sayHello): string

@@ -9,12 +9,7 @@ services:
         arguments:
             - '@tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandler'
         tags:
-            - { name: console.command, command: say-helo }
-    
-    'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Command\SayHelloAwareCommand':
-        public: true
-        tags:
-            - { name: console.command, command: say-hello-aware }
+            - { name: console.command, command: say-hello }
 
     'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\MyService':
         public: true

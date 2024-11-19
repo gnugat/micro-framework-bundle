@@ -12,6 +12,7 @@
 namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Service\Monolog;
 
 use Monolog\Handler\Handler;
+use Monolog\LogRecord;
 
 class MonologHandlerTester extends Handler
 {
@@ -19,12 +20,12 @@ class MonologHandlerTester extends Handler
 
     private $log = self::NO_LOG;
 
-    public function isHandling(array $record): bool
+    public function isHandling(LogRecord $record): bool
     {
         return true;
     }
 
-    public function handle(array $record): bool
+    public function handle(LogRecord $record): bool
     {
         $this->log = $record['message'];
 

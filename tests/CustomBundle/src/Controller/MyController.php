@@ -18,11 +18,9 @@ use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandle
 
 class MyController
 {
-    private $sayHelloHandler;
-
-    public function __construct(SayHelloHandler $sayHelloHandler)
-    {
-        $this->sayHelloHandler = $sayHelloHandler;
+    public function __construct(
+        private SayHelloHandler $sayHelloHandler,
+    ) {
     }
 
     public function helloWorld(Request $request): Response

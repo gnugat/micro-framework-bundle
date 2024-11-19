@@ -20,23 +20,23 @@
         "psr-4": { "tests\\Gnugat\\MicroFrameworkBundle\\": "tests/" }
     },
     "require": {
-        "php": "^8.0",
-        "symfony/config": "^6.0",
-        "symfony/console": "^6.0",
-        "symfony/dependency-injection": "^6.0",
-        "symfony/error-handler": "^6.0",
-        "symfony/event-dispatcher": "^6.0",
-        "symfony/filesystem": "^6.0",
-        "symfony/finder": "^6.0",
-        "symfony/http-foundation": "^6.0",
-        "symfony/http-kernel": "^6.0",
-        "symfony/routing": "^6.0"
+        "php": "^8.2",
+        "symfony/config": "^7.0",
+        "symfony/console": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/error-handler": "^7.0",
+        "symfony/event-dispatcher": "^7.0",
+        "symfony/filesystem": "^7.0",
+        "symfony/finder": "^7.0",
+        "symfony/http-foundation": "^7.0",
+        "symfony/http-kernel": "^7.0",
+        "symfony/routing": "^7.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.6",
-        "phpunit/phpunit": "^9.0",
-        "symfony/monolog-bridge": "^6.0",
-        "symfony/monolog-bundle": "^3.0",
-        "symfony/yaml": "^6.0"
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpunit/phpunit": "^11.0",
+        "symfony/monolog-bridge": "^7.0",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/yaml": "^7.0"
     }
 }
