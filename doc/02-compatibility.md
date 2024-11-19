@@ -50,41 +50,10 @@ In the next sub-sections we're going to review `FrameworkBundle` specific featur
 that third party bundles might depend on, and see how this can affect compatibility
 as well as how to fix it.
 
-### Annotations
-
-`MicroFrameworkBundle` doesn't provide support for annotations, but by manually
-setting it up bundles that use this configuration format can be used:
-
-1. register an implementation of `Doctrine\Common\Annotations\Reader` as a service named `annotation_reader`
-2. register `AnnotationLoader` for the related components (e.g. Validator, Routing, Serializer, etc)
-
-While their main strength is to reduce the distance between configuration and code
-as well as enabling AOP, annotations aren't supported here because they tightly
-couple application code with third party libraries.
-
-We'd recommend to switch to another configuration format.
-
-### Controllers and Routings
-
-`MicroFrameworkBundle` forces applications to configure their controller as services,
-since it's the only routing configuration format it supports.
-
-Third party bundles that provide controllers are excluded from the "micro bundle"
-category as it might indicate that they try to solve too many use cases.
-
-Those bundles might still be compatible and their controllers might be or might
-not be able to be registered.
-
-> **Note**: `FrameworkBundle` prodives a Base Controller that contains shortcut
-> methods.
-> By creating instead a controller as a service, we make its dependencies explicit.
-> If there's many of them, the controller might do too much work (it should only be a glue)
-> or it might needs to be split.
-
 ### Debug Toolbar and Profiler
 
 The debug toolbar isn't provided by `MicroFrameworkBundle` as it would add a
-dependency on frontend tools.
+dependency on frontend tools (which we might not need if we're only creating APIs).
 
 It is still possible to install it by registering `DataCollectors` as well as the
 `Profiler`.

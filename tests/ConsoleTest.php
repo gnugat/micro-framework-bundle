@@ -11,8 +11,8 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle;
 
-use PHPUnit\Framework\Attributes\Test;
 use Gnugat\MicroFrameworkBundle\Service\KernelApplication;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\ApplicationTester;

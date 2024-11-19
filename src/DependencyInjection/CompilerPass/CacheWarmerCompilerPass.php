@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CacheWarmerCompilerPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition('cache_warmer')) {

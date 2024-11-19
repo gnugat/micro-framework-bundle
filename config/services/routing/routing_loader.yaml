@@ -3,6 +3,7 @@ services:
         class: 'Symfony\Component\Routing\Loader\XmlFileLoader'
         arguments:
             - '@file_locator'
+            - '%kernel.environment%'
         tags:
             - { name: routing.loader }
 
@@ -10,6 +11,7 @@ services:
         class: 'Symfony\Component\Routing\Loader\YamlFileLoader'
         arguments:
             - '@file_locator'
+            - '%kernel.environment%'
         tags:
             - { name: routing.loader }
 
@@ -17,6 +19,15 @@ services:
         class: 'Symfony\Component\Routing\Loader\PhpFileLoader'
         arguments:
             - '@file_locator'
+            - '%kernel.environment%'
+        tags:
+            - { name: routing.loader }
+
+    routing.loader.glob:
+        class: 'Symfony\Component\Routing\Loader\GlobFileLoader'
+        arguments:
+            - '@file_locator'
+            - '%kernel.environment%'
         tags:
             - { name: routing.loader }
 
@@ -24,12 +35,44 @@ services:
         class: 'Symfony\Component\Routing\Loader\DirectoryLoader'
         arguments:
             - '@file_locator'
+            - '%kernel.environment%'
         tags:
             - { name: routing.loader }
 
     routing.loader.container:
         class: 'Symfony\Component\Routing\Loader\ContainerLoader'
         arguments:
-            - '@service_container'
+            - !tagged_locator { tag: 'routing.route_loader' }
+            - '%kernel.environment%'
         tags:
             - { name: routing.loader }
+
+    routing.loader.attribute:
+        class: 'Gnugat\MicroFrameworkBundle\Routing\AttributeRouteControllerLoader'
+        arguments:
+            - '%kernel.environment%'
+        tags:
+          - { name: routing.loader, priority: -10 }
+
+    routing.loader.attribute.directory:
+        class: 'Symfony\Component\Routing\Loader\AttributeDirectoryLoader'
+        arguments:
+            - '@file_locator'
+            - '@routing.loader.attribute'
+        tags:
+          - { name: routing.loader, priority: -10 }
+
+    routing.loader.attribute.file:
+        class: 'Symfony\Component\Routing\Loader\AttributeFileLoader'
+        arguments:
+            - '@file_locator'
+            - '@routing.loader.attribute'
+        tags:
+          - { name: routing.loader, priority: -10 }
+
+    routing.loader.psr4:
+        class: 'Symfony\Component\Routing\Loader\Psr4DirectoryLoader'
+        arguments:
+            - '@file_locator'
+        tags:
+          - { name: routing.loader, priority: -10 }

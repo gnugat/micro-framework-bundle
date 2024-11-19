@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
  */
 class KernelCacheClearer implements CacheClearerInterface
 {
+    #[\Override]
     public function clear(string $cacheDir): void
     {
         $filesystem = new Filesystem();

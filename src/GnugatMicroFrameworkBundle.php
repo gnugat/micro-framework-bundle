@@ -24,10 +24,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class GnugatMicroFrameworkBundle extends Bundle
 {
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
-        parent::build($container);
-
         $container->addCompilerPass(new CacheClearerCompilerPass());
         $container->addCompilerPass(new CacheWarmerCompilerPass());
         $container->addCompilerPass(new ConsoleCommandCompilerPass());

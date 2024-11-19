@@ -24,13 +24,15 @@ class RouterCacheWarmer implements CacheWarmerInterface
     ) {
     }
 
+    #[\Override]
     public function warmUp(string $cacheDir): void
     {
         $this->router->getMatcher();
         $this->router->getGenerator();
     }
 
-    public function isOptional()
+    #[\Override]
+    public function isOptional(): bool
     {
         return true;
     }

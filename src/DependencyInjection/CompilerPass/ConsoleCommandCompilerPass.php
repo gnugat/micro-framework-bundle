@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ConsoleCommandCompilerPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         $commandServices = $container->findTaggedServiceIds('console.command');
