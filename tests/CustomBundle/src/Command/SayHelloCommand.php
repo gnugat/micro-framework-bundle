@@ -20,11 +20,9 @@ use tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus\SayHelloHandle
 
 class SayHelloCommand extends Command
 {
-    private $sayHelloHandler;
-
-    public function __construct(SayHelloHandler $sayHelloHandler)
-    {
-        $this->sayHelloHandler = $sayHelloHandler;
+    public function __construct(
+        private SayHelloHandler $sayHelloHandler,
+    ) {
         parent::__construct();
     }
 

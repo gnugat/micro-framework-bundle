@@ -13,10 +13,9 @@ namespace tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\CommandBus;
 
 class SayHello
 {
-    public $name;
-
-    public function __construct($name)
-    {
+    public function __construct(
+        public mixed $name,
+    ) {
         if (null === $name) {
             $name = 'world';
         }
