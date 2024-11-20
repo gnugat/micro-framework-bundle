@@ -11,6 +11,7 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\App\Controller;
 
+use tests\Gnugat\MicroFrameworkBundle\App\Game\FizzBuzz;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,26 +21,17 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class FizzBuzzController
 {
+    public function __construct(
+        private FizzBuzz $fizzBuzz,
+    ) {
+    }
+
     #[Route('/fizz-buzz', methods: ['GET'], name: self::class)]
     public function __invoke(Request $request): Response
     {
-        $index = (int) $request->query->get('index', 1);
-
-        $value = (string) $index;
-        if (0 === $index % 3) {
-            $value = 'fizz';
-        }
-        if (0 === $index % 5) {
-            $value = 'buzz';
-        }
-        if (0 === $index % 3 && 0 === $index % 5) {
-            $value = 'fizz buzz';
-        }
-
-        $result = [
-            'index' => $index,
-            'value' => $value,
-        ];
+        $result = ($this->fizzBuzz)(
+            (int) $request->query->get('index', 1),
+        );
 
         return new Response(json_encode($result), 200, [
             'Content-Type' => 'application/json',

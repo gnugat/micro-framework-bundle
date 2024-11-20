@@ -1,2 +1,17 @@
 imports:
     - { resource: vendors/ }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    tests\Gnugat\MicroFrameworkBundle\App\:
+        resource: '../'
+        exclude:
+            - '../config/'
+            - '../AppKernel.php'
+
+    tests\Gnugat\MicroFrameworkBundle\App\Controller\:
+        resource: '../Controller/'
+        tags: ['controller.service_arguments']

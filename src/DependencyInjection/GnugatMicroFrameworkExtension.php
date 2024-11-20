@@ -11,6 +11,12 @@
 
 namespace Gnugat\MicroFrameworkBundle\DependencyInjection;
 
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\ConfigTrait;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\ConsoleTrait;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\DependencyInjectionTrait;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\EventDispatcherTrait;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\HttpKernelTrait;
+use Gnugat\MicroFrameworkBundle\DependencyInjection\Extension\RoutingTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,6 +26,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class GnugatMicroFrameworkExtension extends Extension
 {
+    use ConfigTrait;
+    use ConsoleTrait;
+    use DependencyInjectionTrait;
+    use EventDispatcherTrait;
+    use HttpKernelTrait;
+    use RoutingTrait;
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $fileLocator = new FileLocator(__DIR__.'/../../config');
@@ -30,27 +43,11 @@ class GnugatMicroFrameworkExtension extends Extension
         ]));
         $loader->load('services/');
 
-        $this->configureRoutingParameters($container);
-    }
-
-    private function configureRoutingParameters(ContainerBuilder $container): void
-    {
-        if (false === $container->hasParameter('router.resource')) {
-            $container->setParameter(
-                'router.resource',
-                '%kernel.project_dir%/config/routings',
-            );
-        }
-        if (false === $container->hasParameter('router.resource_type')) {
-            $container->setParameter('router.resource_type', 'directory');
-        }
-        $kernelEnvironment = $container->getParameter('kernel.environment');
-        $kernelContainerClass = $container->getParameter(
-            'kernel.container_class',
-        );
-        $container->setParameter(
-            'router.cache_class_prefix',
-            $kernelContainerClass.ucfirst($kernelEnvironment),
-        );
+        $this->loadConfig($configs, $container);
+        $this->loadConsole($configs, $container);
+        $this->loadDependencyInjection($configs, $container);
+        $this->loadEventDispatcher($configs, $container);
+        $this->loadHttpKernel($configs, $container);
+        $this->loadRouting($configs, $container);
     }
 }

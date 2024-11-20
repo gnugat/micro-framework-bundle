@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
+use tests\Gnugat\MicroFrameworkBundle\App\Game\FizzBuzz;
 
 class ApplicationTest extends TestCase
 {
@@ -24,6 +25,14 @@ class ApplicationTest extends TestCase
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();
+    }
+
+    #[Test]
+    public function it_can_load_autowired_services(): void
+    {
+        self::assertTrue($this->kernel->getContainer()->has(
+            FizzBuzz::class,
+        ));
     }
 
     #[Test]
