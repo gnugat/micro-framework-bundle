@@ -29,29 +29,14 @@ class GnugatMicroFrameworkBundle extends Bundle
     {
         $container->addCompilerPass(new CacheClearerCompilerPass());
         $container->addCompilerPass(new CacheWarmerCompilerPass());
-        $container->addCompilerPass(new ConsoleCommandCompilerPass());
         $container->addCompilerPass(new RoutingResolverCompilerPass());
         $container->addCompilerPass(
             new RegisterListenersPass(),
             PassConfig::TYPE_BEFORE_REMOVING,
         );
-        $this->addCompilerPassIfExists(
-            $container,
-            AddConsoleCommandPass::class,
+        $container->addCompilerPass(
+            new AddConsoleCommandPass(),
             PassConfig::TYPE_BEFORE_REMOVING,
         );
-    }
-
-    private function addCompilerPassIfExists(
-        ContainerBuilder $container,
-        string $class,
-        string $type = PassConfig::TYPE_BEFORE_OPTIMIZATION,
-        int $priority = 0,
-    ): void {
-        $container->addResource(new ClassExistenceResource($class));
-
-        if (class_exists($class)) {
-            $container->addCompilerPass(new $class(), $type, $priority);
-        }
     }
 }
