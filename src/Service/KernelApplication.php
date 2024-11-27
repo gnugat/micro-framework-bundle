@@ -11,6 +11,7 @@
 
 namespace Gnugat\MicroFrameworkBundle\Service;
 
+use Symfony\Component\Console\Command\ListCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,8 +32,9 @@ class KernelApplication extends Application
     ) {
         parent::__construct('Micro Symfony', Kernel::VERSION);
 
-        $this->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', $kernel->getEnvironment()));
-        $this->getDefinition()->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
+        $inputDefinition = $this->getDefinition();
+        $inputDefinition->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', $kernel->getEnvironment()));
+        $inputDefinition->addOption(new InputOption('--no-debug', null, InputOption::VALUE_NONE, 'Switches off debug mode.'));
     }
 
     public function getKernel(): KernelInterface
@@ -43,15 +45,41 @@ class KernelApplication extends Application
     #[\Override]
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
-        $this->kernel->boot();
-
-        $this->setDispatcher($this->kernel->getContainer()->get('event_dispatcher'));
+        $this->registerCommands();
 
         if ($this->registrationErrors) {
             $this->renderRegistrationErrors($input, $output);
         }
 
+        $this->setDispatcher($this->kernel->getContainer()->get('event_dispatcher'));
+
         return parent::doRun($input, $output);
+    }
+
+    /**
+     * symfony/symfony#23836: Catch Fatal errors in commands registration
+     * symfony/symfony#26288: Show unregistered command warning at the end of the list command
+     */
+    #[\Override]
+    protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output): int
+    {
+        if (!$command instanceof ListCommand) {
+            if ($this->registrationErrors) {
+                $this->renderRegistrationErrors($input, $output);
+                $this->registrationErrors = array();
+            }
+
+            return parent::doRunCommand($command, $input, $output);
+        }
+
+        $returnCode = parent::doRunCommand($command, $input, $output);
+
+        if ($this->registrationErrors) {
+            $this->renderRegistrationErrors($input, $output);
+            $this->registrationErrors = array();
+        }
+
+        return $returnCode;
     }
 
     #[\Override]
@@ -104,10 +132,8 @@ class KernelApplication extends Application
             if ($bundle instanceof Bundle) {
                 try {
                     $bundle->registerCommands($this);
-                } catch (\Exception $e) {
-                    $this->registrationErrors[] = $e;
                 } catch (\Trowable $e) {
-                    $this->registrationErrors[] = new FatalThrowableError($e);
+                    $this->registrationErrors[] = $e;
                 }
             }
         }
@@ -124,10 +150,9 @@ class KernelApplication extends Application
             foreach ($container->getParameter('console.command.ids') as $id) {
                 if (!isset($lazyCommandIds[$id])) {
                     try {
-                    } catch (\Exception $e) {
-                        $this->registrationErrors[] = $e;
+                        $this->add($container->get($id));
                     } catch (\Throwable $e) {
-                        $this->registrationErrors[] = new FatalThrowableError($e);
+                        $this->registrationErrors[] = $e;
                     }
                 }
             }
@@ -143,7 +168,7 @@ class KernelApplication extends Application
         (new SymfonyStyle($input, $output))->warning('Some commands could not be registered:');
 
         foreach ($this->registrationErrors as $error) {
-            $this->doRenderException($error, $output);
+            $this->doRenderThrowable($error, $output);
         }
 
         $this->registrationErrors = [];
