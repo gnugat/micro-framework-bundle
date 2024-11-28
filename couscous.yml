@@ -1,3 +1,21 @@
+# Install couscous:
+#
+# ```console
+# curl -OS https://couscous.io/couscous.phar
+# php couscous.phar preview
+# ```
+#
+# Preview:
+#
+# ```console
+# couscous preview
+# ```
+#
+# Publish:
+#
+# ```console
+# couscous deploy
+# ```
 template:
     url: https://github.com/CouscousPHP/Template-Light.git
 
