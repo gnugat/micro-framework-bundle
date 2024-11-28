@@ -62,7 +62,7 @@ controllers:
     * few dependencies
     * small API
     * small footprint for better performance
-    * [more information](doc/10-benchmark-2016.md)
+    * [more information](doc/11-benchmark-2024.md)
 * supports autowiring/autoconfiguration
 * supports Routing Attributes
 
