@@ -51,7 +51,7 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/11-benchmark-2024.html">
                                         Benchmark
                                     </a>
                                 </li>
@@ -61,7 +61,7 @@
 
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="introduction">Introduction</h1>
+                    <h1 id="benchmark---2016">Benchmark - 2016</h1>
 <blockquote>
 <p><strong>TD;DR</strong>: <a href="http://symfony.com">Symfony</a> has always been able to be used as a micro framework.
 For more &quot;add what you need&quot; micro-framework like spirit, use the <a href="http://github.com/gnugat/symfony-empty-edition">Empty Edition</a>
@@ -139,12 +139,6 @@ packages it replaces (44): 72.</p>
 <li>footprint: 22x slower than flat PHP</li>
 <li>size: 72 dependencies</li>
 </ul>
-<blockquote>
-<p><strong>Note</strong>: Profiling it using [blackfire]():</p>
-<pre><code>blackfire curl 'http://localhost:2502/app.php'</code></pre>
-<p>Here's the <a href="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/graph">grap</a>:</p>
-<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/embed"></iframe>
-</blockquote>
 <h2 id="empty-edition">Empty Edition</h2>
 <p>As stated above the Standard Edition has a &quot;solve 80% of use cases out of the box&quot;
 philosophy, so it comes with many dependencies that might not fit our use. Micro
@@ -206,14 +200,6 @@ killall php</code></pre>
 <li>footprint: 8x slower than flat PHP</li>
 <li>size: 29 dependencies</li>
 </ul>
-<blockquote>
-<p><strong>Note</strong>: Profiling it using blackfire:</p>
-<pre><code>blackfire curl 'http://localhost:2503/app.php'</code></pre>
-<p>Here's the <a href="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph">grap</a>:</p>
-<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
-<p>Here's the <a href="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph">comparison grap</a>:</p>
-<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
-</blockquote>
 <h2 id="micro-framework-bundle">Micro Framework Bundle</h2>
 <p>By reducing the number of dependencies, we also drastically reduced the framework
 footprint. This is not surprising as:</p>
@@ -312,14 +298,6 @@ killall php</code></pre>
 <li>footprint: 5x slower than flat PHP</li>
 <li>size: 13 dependencies</li>
 </ul>
-<blockquote>
-<p><strong>Note</strong>: Profiling it using blackfire:</p>
-<pre><code>blackfire curl 'http://localhost:2504/app.php'</code></pre>
-<p>Here's the <a href="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/graph">grap</a>:</p>
-<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
-<p>Here's the <a href="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/graph">comparison grap</a>:</p>
-<iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
-</blockquote>
 <h2 id="conclusion">Conclusion</h2>
 <p>Symfony has always been able to be used as a micro framework bundle.</p>
 <p>The <a href="https://github.com/symfony/symfony-standard">Standard Edition</a> and the
@@ -331,7 +309,7 @@ and <a href="http://github.com/gnugat/micro-framework-bundle">MicroFrameworkBund
 be a viable alternative (they are slimer in term of dependencies and faster).</p>
 <blockquote>
 <p><strong>Note</strong>: At the time of writing, MicroFrameworkBundle is still under development
-(version <code>0.1.0</code>). Use it at your own risk and contribute to it :) .</p>
+(version <code>0.5.0</code>). Use it at your own risk and contribute to it :) .</p>
 </blockquote>
                 </section>
 

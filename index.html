@@ -51,7 +51,7 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/11-benchmark-2024.html">
                                         Benchmark
                                     </a>
                                 </li>
@@ -66,9 +66,36 @@
 micro-framework which follows the &quot;add what you need&quot; philosophy.</p>
 <h2 id="installation">Installation</h2>
 <p>First install it using <a href="https://getcomposer.org/download">Composer</a>:</p>
-<pre><code>composer require gnugat/micro-framework-bundle:^0.8</code></pre>
-<p>Then enable it in your application's kernel (e.g. <code>app/AppKernel.php</code>):</p>
-<pre><code>new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()</code></pre>
+<pre><code class="language-console">composer require gnugat/micro-framework-bundle:^0.9</code></pre>
+<p>Then enable it in your application, for example by adding it in <code>config/bundles.php</code>:</p>
+<pre><code class="language-php">&lt;?php
+
+return [
+    \Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+<p>Next, set up autowiring / autoconfigure in `config/services.yaml:</p>
+<pre><code class="language-yaml">services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/AppKernel.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        public: true
+        tags: ['controller.service_arguments']</code></pre>
+<p>Finally enable Routing Attributes in <code>config/routings/attributes.yaml</code>:</p>
+<pre><code class="language-yaml">controllers:
+    resource:                  
+        path: ../../src/Controller/     
+        namespace: App\Controller       
+    type: attribute</code></pre>
 <p><a href="doc/01-installation.html">More information</a></p>
 <h2 id="features">Features</h2>
 <ul>
@@ -79,8 +106,10 @@ micro-framework which follows the &quot;add what you need&quot; philosophy.</p>
 <li>few dependencies</li>
 <li>small API</li>
 <li>small footprint for better performance</li>
-<li><a href="doc/03-benchmark.html">more information</a></li>
+<li><a href="doc/11-benchmark-2024.html">more information</a></li>
 </ul></li>
+<li>supports autowiring/autoconfiguration</li>
+<li>supports Routing Attributes</li>
 </ul>
 <h2 id="want-to-know-more">Want to know more?</h2>
 <p>You can see the current and past versions using one of the following:</p>

@@ -51,7 +51,7 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/11-benchmark-2024.html">
                                         Benchmark
                                     </a>
                                 </li>
@@ -62,98 +62,37 @@
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
                     <h1 id="installation">Installation</h1>
-<p><code>MicroFrameworkBundle</code> can be installed in new applications as well as existing
-ones.</p>
-<p>We're going to review first the Empty Edition, then the Standard Edition and
-we'll see what we need to consider for existing applications.</p>
-<h2 id="empty-edition">Empty Edition</h2>
-<p><a href="http://symfony.com">Symfony</a> applications can be created using distributions,
-for example the <a href="http://github.com/gnugat/symfony-empty-edition">Empty Edition</a>:</p>
+<p><code>MicroFrameworkBundle</code> can be installed in new and existing applications.</p>
+<p>Here's how to create a new Symfony project, using the Empy Edition:</p>
 <pre><code>composer create-project gnugat/symfony-empty-edition
 cd symfony-empty-edition</code></pre>
-<p>Then we need to replace <code>FrameworkBundle</code> by <code>MicroFrameworkBundle</code>, first in the
+<p>Or alternatively, using Symfony Flex:</p>
+<pre><code>symfony new my_project_directory
+cd my_project_directory</code></pre>
+<p>Now we need to replace <code>FrameworkBundle</code> by <code>MicroFrameworkBundle</code>, first in the
 composer dependencies:</p>
 <pre><code>composer require 'gnugat/micro-framework-bundle'
 composer remove --update-with-dependencies 'symfony/framework-bundle'</code></pre>
-<p>Then in the <code>app/AppKernel.php</code> file by replacing <code>Symfony\Bundle\FrameworkBundle\FrameworkBundle</code>
-with <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code>.</p>
-<p>Next, the <code>framework</code> configuration key needs to be removed from <code>app/config/config.yml</code>.</p>
-<p>Finally, in the <code>bin/console</code> file
-replace <code>Symfony\Bundle\FrameworkBundle\Console\Application</code>
-with <code>Gnugat\MicroFrameworkBundle\Service\KernelApplication as Application</code>.</p>
-<h2 id="standard-edition">Standard Edition</h2>
-<p>There's an official distribution: <a href="https://github.com/symfony/symfony-standard">Standard Edition</a>.
-It provides pre-installed libraries, but it can be installed in the same manner:</p>
-<pre><code>composer create-project symfony/framework-standard-edition
-cd framework-standard-edition
-composer require 'gnugat/micro-framework-bundle'</code></pre>
-<p>Then we need to clean <code>app/AppKernel.php</code> file by removing the following bundles:</p>
+<blockquote>
+<p><strong>Note</strong>: With Symfony Flex, the <code>symfony/symfony</code> global package is installed,
+and it contains the <code>symfony/framework-bundle package</code>.</p>
+</blockquote>
+<p>Then in the <code>config/bundles.php</code> file by replacing:</p>
 <ul>
 <li><code>Symfony\Bundle\FrameworkBundle\FrameworkBundle</code></li>
-<li><code>Doctrine\Bundle\DoctrineBundle\DoctrineBundle</code> (depends on FrameworkBundle specific console Application)</li>
-<li><code>Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</code> (depends on annotations)</li>
-<li><code>Symfony\Bundle\TwigBundle\TwigBundle</code> (depends on assets)</li>
-<li><code>Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</code> (depends on data collectors)</li>
+<li>with <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code></li>
 </ul>
-<p>Don't forget to add <code>Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle</code>.</p>
-<p>Next remove configuration for the following keys in <code>app/config/config*.yml</code>:</p>
+<p>Next, the <code>framework</code> configuration key needs to be removed:</p>
 <ul>
-<li><code>framework</code></li>
-<li><code>doctrine</code> (as well as <code>database_*</code> parameters)</li>
-<li><code>web_profiler</code></li>
-<li><code>twig</code></li>
+<li>from <code>config/services.yml</code></li>
+<li>or in <code>config/packages/</code></li>
 </ul>
-<p>Extra steps are required for routing:</p>
-<ol>
-<li>create a <code>app/config/routings</code> directory</li>
-<li>move <code>app/config/routing.yml</code> to <code>app/config/routings/app.yml</code></li>
-<li>switch from annotation to YAML routing configuration in <code>app/config/routings/app.yml</code>:
-<pre><code>homepage:
-path: /
-defaults:
-    _controller: app.default_controller:indexAction
-methods:
-    - GET</code></pre></li>
-<li>configure <code>AppBundle\Controller\DefaultController</code> as a service in <code>app/config/services.yml</code>:
-<pre><code>services:
-    app.default_controller:
-        class: AppBundle\Controller\DefaultController</code></pre></li>
-<li>
-<p>remove <code>FrameworkBundle</code> classes from <code>src/AppBundle/Controller/DefaultController.php</code>:</p>
-<pre><code class="language-php">&lt;?php
-
-namespace AppBundle\Controller;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-class DefaultController
-{
-    public function indexAction(Request $request)
-    {
-        return new Response('Hello world');
-    }
-}</code></pre>
-</li>
-<li>remove <code>app/config/routing_dev.yml</code></li>
-</ol>
-<p>Finally, in the <code>bin/console</code> file
-replace <code>Symfony\Bundle\FrameworkBundle\Console\Application</code>
-with <code>Gnugat\MicroFrameworkBundle\Console\KernelApplication as Application</code>.</p>
-<blockquote>
-<p><strong>Note</strong>: Since <code>symfony/symfony</code> is specified as a requirement in <code>composer.json</code>,
-<code>FrameworkBundle</code> and the removed bundles are still present in the vendors.
-To get rid of them, specificy instead the actual list of component and bundles.</p>
-</blockquote>
-<h2 id="existing-applications">Existing Applications</h2>
-<p>Replacing <code>FrameworkBundle</code> with <code>MicroFrameworkBundle</code> might be tricky. Here's
-a small guide on how to do so.</p>
-<p>The first step is to make sure everything is saved, in case we might need to rollback.
-With git we can commit everything or statsh them.</p>
-<p>Then we need to install the bundle:</p>
-<pre><code>composer require 'gnugat/micro-framework-bundle'</code></pre>
-<p>And register it in <code>app/AppKernel.php</code> by replacing <code>FrameworkBundle</code>.</p>
-<p>The next steps are iterations of &quot;try and debug&quot;:</p>
+<p>Finally in the <code>bin/console</code> file, replace:</p>
+<ul>
+<li><code>Symfony\Bundle\FrameworkBundle\Console\Application</code></li>
+<li>with <code>Gnugat\MicroFrameworkBundle\Service\KernelApplication as Application</code>.</li>
+</ul>
+<p>Make sure to try and debug your application after that:</p>
 <ol>
 <li>remove the cache <code>rm -rf var/cache</code></li>
 <li>try to run the console: <code>bin/console</code></li>

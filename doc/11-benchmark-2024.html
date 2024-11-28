@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Symfony Micro Framework Bundle</title>
+
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://gnugat.github.io/micro-framework-bundle/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://gnugat.github.io/micro-framework-bundle/">
+                Symfony Micro Framework Bundle
+                <small class="hidden-xs hidden-sm">
+                    Faster, lighter, better Symfony
+                </small>
+            </a>
+
+                            <a href="https://github.com/gnugat/micro-framework-bundle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/">
+                                        Home
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/01-installation.html">
+                                        Installation
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/02-compatibility.html">
+                                        Compatibility
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/11-benchmark-2024.html">
+                                        Benchmark
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="benchmark---2024">Benchmark - 2024</h1>
+<blockquote>
+<p><strong>TD;DR</strong>: <a href="http://symfony.com">Symfony</a> has always been able to be used as a micro framework.
+For more &quot;add what you need&quot; micro-framework like spirit, use the <a href="http://github.com/gnugat/symfony-empty-edition">Empty Edition</a>
+and the <a href="http://github.com/gnugat/micro-framework-bundle">MicroFrameworkBundle</a>.</p>
+</blockquote>
+<p>There are many definitions out there to qualify a framework as being &quot;micro&quot;, among
+them the following criterias often appear:</p>
+<ul>
+<li>small API (usage of framework's code in your application)</li>
+<li>few Lines Of Code (LOC)</li>
+<li>few dependencies (how many third party libraries are used)</li>
+<li>small footprint (framework loading time)</li>
+</ul>
+<p>Is Symfony a micro framework as well? Let's find out.</p>
+<blockquote>
+<p><strong>Note</strong>: To know more about how to determine if a framework is micro, read
+<a href="https://igor.io/archive.html">Igor Wiedler</a> article: <a href="https://igor.io/2013/09/02/how-heavy-is-silex.html">How heavy is Silex?</a>.</p>
+</blockquote>
+<h2 id="measuring">Measuring</h2>
+<p>While &quot;Hello World&quot; examples rarely reflect real world applications, it's going
+to be good enough to serve the purpose of this article: getting a good measure of
+Symfony's API, LOC, dependencies and footprint.</p>
+<p>Since dependencies and footprint are easy to measure, we're going to rely on it.
+However, all benchmarks are relative to the computer that executes them, so we need
+a point of reference: a flat PHP &quot;Hello World&quot; application:</p>
+<pre><code class="language-php">&lt;?php
+// index.php
+
+echo 'Hello World';</code></pre>
+<p>Let's run the benchmark:</p>
+<pre><code>php -S localhost:2501 &amp;
+ab -t 10 'http://localhost:2501/index.php'
+killall php</code></pre>
+<p>Result: <strong>1 188.73</strong> Requests per second.</p>
+<h2 id="symfony-flex">Symfony Flex</h2>
+<p>Let's use Symfony Flex to create a new application:</p>
+<pre><code class="language-console">symfony new my_project_directory --version="7.1.*"
+cd my_project_directory</code></pre>
+<blockquote>
+<p>Note: we're not installing a &quot;webapp&quot; application, as this would install even more packages.
+The purpose here is to see what an official barebone symfony app compares to a custom stripped down version.</p>
+</blockquote>
+<p>The official Symfony application follows a &quot;solve 80% of use cases out of the box&quot; philosohpy,
+it's almost ready, we just need to tweak the given controller:</p>
+<pre><code class="language-php">&lt;?php
+// src/App/Controller/DefaultController.php
+
+namespace App\Controller;
+
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class DefaultController extends AbstractController
+{
+    #[Route('/hello-world', name: 'app_hello_world')]
+    public function index(Request $request)
+    {
+        return new Response('Hello World');
+    }
+}</code></pre>
+<p>Let's run the benchmark:</p>
+<pre><code>composer update -o --no-dev
+php bin/console cache:clear --env=prod --no-debug
+php -S localhost:2502 -t public &amp;
+ab -t 10 'http://localhost:2502/index.php/hello-world'
+killall php</code></pre>
+<p>Result: <strong>39.12</strong> Requests per second.</p>
+<p>We're also going to list the dependencies:</p>
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 31, so to sum up:</p>
+<ul>
+<li>API: 1 step to add a new route</li>
+<li>footprint: 30x slower than flat PHP</li>
+<li>size: 31 dependencies</li>
+</ul>
+<h2 id="empty-edition">Empty Edition</h2>
+<p>As stated above, Symfony Flex has a &quot;solve 80% of use cases out of the box&quot;
+philosophy, so it comes with many dependencies that might not fit our use. Micro
+framework usually follow a &quot;add what you need philosophy&quot;, which is exactly what
+the Empty Edition is all about.</p>
+<p>Let's see if we can get more micro with it:</p>
+<pre><code>composer create-project gnugat/symfony-empty-edition
+cd symfony-empty-edition</code></pre>
+<p>The first step is to create a controller:</p>
+<pre><code class="language-php">&lt;?php
+// src/App/Controller/HelloController.php
+
+namespace App\Controller;
+
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class HelloController
+{
+    #[Route('/hello-world', name: 'app_hello_world')]
+    public function world(Request $request)
+    {
+        return new Response('Hello World');
+    }
+}</code></pre>
+<p>Let's run the benchmark:</p>
+<pre><code>composer update -o --no-dev
+bin/console cache:clear -e prod --no-debug
+php -S localhost:2503 -t web &amp;
+ab -t 10 'http://localhost:2503/app.php/hello-world'
+killall php</code></pre>
+<p>Result: <strong>63.52</strong> Requests per second.</p>
+<p>We're also going to list the dependencies:</p>
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 29.</p>
+<p>So to sum up:</p>
+<ul>
+<li>API: 1 step to add a new route</li>
+<li>footprint: 18x slower than flat PHP</li>
+<li>size: 29 dependencies</li>
+</ul>
+<h2 id="micro-framework-bundle">Micro Framework Bundle</h2>
+<p>By reducing the number of dependencies, we also drastically reduced the framework
+footprint. This is not surprising as:</p>
+<ul>
+<li>we've reduced the number of classes to autoload</li>
+<li>we've reduced the number of configuration (parameters and service definition) to set up</li>
+<li>we've reduced the bootload time of the Dependency Injection Container (less services to instantiate)</li>
+<li>we've reduced the number of event listeners called</li>
+</ul>
+<p>Can we go further? Certainly: the FrameworkBundle also follows a
+&quot;solve 80% of use cases out of the box&quot; (includes Forms, Security, Templating, Translation, Assets, annotations, etc).</p>
+<p>By using a MicroFrameworkBundle that would provide the strict minimum and follow
+the micro framework philosophy of &quot;add what you need&quot; we can surely reduce further
+the number of dependencies. Hence <code>gnugat/micro-framework-bundle</code>:</p>
+<pre><code>composer require 'gnugat/micro-framework-bundle'
+composer remove 'symfony/framework-bundle'</code></pre>
+<p>Then we need to swap the Framework bundles in `config/bundles.php:</p>
+<pre><code class="language-php">&lt;?php
+
+return [
+    \Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+<p>Next we need to update the console:</p>
+<pre><code class="language-php">#!/usr/bin/env php
+&lt;?php
+// bin/console
+
+set_time_limit(0);
+
+require_once __DIR__.'/../app/autoload.php';
+
+use Gnugat\MicroFrameworkBundle\Service\KernelApplication as Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+$input = new ArgvInput();
+$env = $input-&gt;getParameterOption(array('--env', '-e'), 'dev');
+$debug = !$input-&gt;hasParameterOption(array('--no-debug', '')) &amp;&amp; $env !== 'prod';
+
+$kernel = new AppKernel($env, $debug);
+$application = new Application($kernel);
+$application-&gt;run($input);</code></pre>
+<p>Finally we can get rid of all <code>framework</code> configuration in the file <code>config/services.yaml</code>.</p>
+<p>Let's benchmark our trimmed application:</p>
+<pre><code>rm -rf var/*
+composer update -o --no-dev
+bin/console cache:clear -e prod --no-debug
+php -S localhost:2504 -t web &amp;
+ab -t 10 'http://localhost:2504/app.php/hello-world'
+killall php</code></pre>
+<p>Result: <strong>85.81</strong> Requests per second.</p>
+<p>We're also going to list the dependencies:</p>
+<pre><code>find vendor -mindepth 2 -maxdepth 2 -type d | wc -l</code></pre>
+<p>We get 26.</p>
+<p>So to sum up:</p>
+<ul>
+<li>API: 1 step to add a new route</li>
+<li>footprint: 14x slower than flat PHP</li>
+<li>size: 26 dependencies</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Symfony has always been able to be used as a micro framework bundle.</p>
+<p>The <a href="https://symfony.com/doc/current/setup.html">Official micro installation</a> and the
+<a href="https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle">FrameworkBundle</a>
+follow a &quot;solve 80% of use cases out of the box&quot; philosohpy, which is better for new comers.</p>
+<p>However for experimented developers who're looking for a &quot;add what you need&quot; philosophy,
+which is what micro-framework usually follow, using the <a href="http://github.com/gnugat/symfony-empty-edition">Empty Edition</a>
+and <a href="http://github.com/gnugat/micro-framework-bundle">MicroFrameworkBundle</a> can
+be a viable alternative (they are slimer in term of dependencies and faster).</p>
+<blockquote>
+<p><strong>Note</strong>: At the time of writing, MicroFrameworkBundle is still under development
+(version <code>0.9.3</code>). Use it at your own risk and contribute to it :) .</p>
+</blockquote>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

@@ -51,7 +51,7 @@
                                     </a>
                                 </li>
                                                             <li class="">
-                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/03-benchmark.html">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/11-benchmark-2024.html">
                                         Benchmark
                                     </a>
                                 </li>
@@ -106,34 +106,9 @@ when they could instead specify only the components they actually depend on.</p>
 <p>In the next sub-sections we're going to review <code>FrameworkBundle</code> specific features
 that third party bundles might depend on, and see how this can affect compatibility
 as well as how to fix it.</p>
-<h3 id="annotations">Annotations</h3>
-<p><code>MicroFrameworkBundle</code> doesn't provide support for annotations, but by manually
-setting it up bundles that use this configuration format can be used:</p>
-<ol>
-<li>register an implementation of <code>Doctrine\Common\Annotations\Reader</code> as a service named <code>annotation_reader</code></li>
-<li>register <code>AnnotationLoader</code> for the related components (e.g. Validator, Routing, Serializer, etc)</li>
-</ol>
-<p>While their main strength is to reduce the distance between configuration and code
-as well as enabling AOP, annotations aren't supported here because they tightly
-couple application code with third party libraries.</p>
-<p>We'd recommend to switch to another configuration format.</p>
-<h3 id="controllers-and-routings">Controllers and Routings</h3>
-<p><code>MicroFrameworkBundle</code> forces applications to configure their controller as services,
-since it's the only routing configuration format it supports.</p>
-<p>Third party bundles that provide controllers are excluded from the &quot;micro bundle&quot;
-category as it might indicate that they try to solve too many use cases.</p>
-<p>Those bundles might still be compatible and their controllers might be or might
-not be able to be registered.</p>
-<blockquote>
-<p><strong>Note</strong>: <code>FrameworkBundle</code> prodives a Base Controller that contains shortcut
-methods.
-By creating instead a controller as a service, we make its dependencies explicit.
-If there's many of them, the controller might do too much work (it should only be a glue)
-or it might needs to be split.</p>
-</blockquote>
 <h3 id="debug-toolbar-and-profiler">Debug Toolbar and Profiler</h3>
 <p>The debug toolbar isn't provided by <code>MicroFrameworkBundle</code> as it would add a
-dependency on frontend tools.</p>
+dependency on frontend tools (which we might not need if we're only creating APIs).</p>
 <p>It is still possible to install it by registering <code>DataCollectors</code> as well as the
 <code>Profiler</code>.</p>
 <blockquote>
@@ -142,16 +117,7 @@ dependency on frontend tools.</p>
 <h3 id="httpcache">HttpCache</h3>
 <p>No extensions for HttpCache are provided and ESI/fragements are not registered.</p>
 <h3 id="console">Console</h3>
-<p>While bundles that have <code>Commands</code> extending <code>ContainerAwareCommand</code> still require
-<code>FrameworkBundle</code>, they can be compatible with <code>MicroFrameworkBundle</code>.</p>
-<blockquote>
-<p><strong>Note</strong>: To drop the dependency on <code>FrameworkBundle</code>, the following solutions can be followed:</p>
-<ul>
-<li>implement <code>ContainerAwareInterface</code> and use <code>ContainerAwareTrait</code></li>
-<li>or register as a service and inject explicitely the dependencies</li>
-</ul>
-</blockquote>
-<p>Finally, <code>FrameworkBundle</code> provides its own Console <code>Application</code> that wraps the
+<p><code>FrameworkBundle</code> provides its own Console <code>Application</code> that wraps the
 Kernel to access its registered bundles.</p>
 <blockquote>
 <p><strong>Note</strong>: Some bundles, like <code>DoctrineBundle</code>, have a direct dependency on
