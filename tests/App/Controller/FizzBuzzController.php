@@ -11,13 +11,13 @@
 
 namespace tests\Gnugat\MicroFrameworkBundle\App\Controller;
 
-use tests\Gnugat\MicroFrameworkBundle\App\Game\FizzBuzz;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use tests\Gnugat\MicroFrameworkBundle\App\Game\Public\FizzBuzz;
 
 /**
- * This controller tests the routing configuration by attributes.
+ * This autowired controller tests the routing configuration by attributes.
  */
 class FizzBuzzController
 {

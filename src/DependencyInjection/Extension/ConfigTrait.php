@@ -11,8 +11,8 @@
 
 namespace Gnugat\MicroFrameworkBundle\DependencyInjection\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\ResourceCheckerInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 trait ConfigTrait
 {

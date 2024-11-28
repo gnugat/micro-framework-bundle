@@ -13,9 +13,7 @@ namespace Gnugat\MicroFrameworkBundle;
 
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\CacheClearerCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\CacheWarmerCompilerPass;
-use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\ConsoleCommandCompilerPass;
 use Gnugat\MicroFrameworkBundle\DependencyInjection\CompilerPass\RoutingResolverCompilerPass;
-use Symfony\Component\Config\Resource\ClassExistenceResource;
 use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

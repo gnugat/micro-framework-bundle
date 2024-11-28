@@ -11,13 +11,12 @@
 
 namespace Gnugat\MicroFrameworkBundle\Service;
 
-use Symfony\Component\Console\Command\ListCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\ListCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -56,32 +55,6 @@ class KernelApplication extends Application
         return parent::doRun($input, $output);
     }
 
-    /**
-     * symfony/symfony#23836: Catch Fatal errors in commands registration
-     * symfony/symfony#26288: Show unregistered command warning at the end of the list command
-     */
-    #[\Override]
-    protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output): int
-    {
-        if (!$command instanceof ListCommand) {
-            if ($this->registrationErrors) {
-                $this->renderRegistrationErrors($input, $output);
-                $this->registrationErrors = array();
-            }
-
-            return parent::doRunCommand($command, $input, $output);
-        }
-
-        $returnCode = parent::doRunCommand($command, $input, $output);
-
-        if ($this->registrationErrors) {
-            $this->renderRegistrationErrors($input, $output);
-            $this->registrationErrors = array();
-        }
-
-        return $returnCode;
-    }
-
     #[\Override]
     public function find(string $name): Command
     {
@@ -114,6 +87,32 @@ class KernelApplication extends Application
         $this->registerCommands();
 
         return parent::add($command);
+    }
+
+    /**
+     * symfony/symfony#23836: Catch Fatal errors in commands registration
+     * symfony/symfony#26288: Show unregistered command warning at the end of the list command.
+     */
+    #[\Override]
+    protected function doRunCommand(Command $command, InputInterface $input, OutputInterface $output): int
+    {
+        if (!$command instanceof ListCommand) {
+            if ($this->registrationErrors) {
+                $this->renderRegistrationErrors($input, $output);
+                $this->registrationErrors = [];
+            }
+
+            return parent::doRunCommand($command, $input, $output);
+        }
+
+        $returnCode = parent::doRunCommand($command, $input, $output);
+
+        if ($this->registrationErrors) {
+            $this->renderRegistrationErrors($input, $output);
+            $this->registrationErrors = [];
+        }
+
+        return $returnCode;
     }
 
     private function registerCommands(): void

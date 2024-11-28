@@ -9,16 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\Gnugat\MicroFrameworkBundle\App\Game;
+namespace tests\Gnugat\MicroFrameworkBundle\App\Game\Public;
+
+use tests\Gnugat\MicroFrameworkBundle\App\Game\Private\ToString;
 
 /**
- * This service tests autowiring.
+ * This service tests autowiring, as a public service.
  */
 class FizzBuzz
 {
+    public function __construct(
+        private ToString $toString,
+    ) {
+    }
+
     public function __invoke(int $index): array
     {
-        $value = (string) $index;
+        $value = ($this->toString)($index);
         if (0 === $index % 3) {
             $value = 'fizz';
         }

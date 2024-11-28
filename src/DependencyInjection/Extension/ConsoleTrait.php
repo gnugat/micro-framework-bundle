@@ -11,8 +11,8 @@
 
 namespace Gnugat\MicroFrameworkBundle\DependencyInjection\Extension;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 trait ConsoleTrait
 {
