@@ -24,6 +24,6 @@ menu:
             text: Compatibility
             relativeUrl: doc/02-compatibility.html
 
-        introduction:
+        benchmark:
             text: Benchmark
-            relativeUrl: doc/03-benchmark.html
+            relativeUrl: doc/10-benchmark-2016.html

@@ -1,4 +1,4 @@
-# Introduction
+# Benchmark - 2016
 
 > **TD;DR**: [Symfony](http://symfony.com) has always been able to be used as a micro framework.
 > For more "add what you need" micro-framework like spirit, use the [Empty Edition](http://github.com/gnugat/symfony-empty-edition)
@@ -106,16 +106,6 @@ So to sum up:
 * footprint: 22x slower than flat PHP
 * size: 72 dependencies
 
-> **Note**: Profiling it using [blackfire]():
->
-> ```
-> blackfire curl 'http://localhost:2502/app.php'
-> ```
->
-> Here's the [grap](https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/graph):
->
-> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5/embed"></iframe>
-
 ## Empty Edition
 
 As stated above the Standard Edition has a "solve 80% of use cases out of the box"
@@ -204,20 +194,6 @@ So to sum up:
 * API: 3 steps to add a new route
 * footprint: 8x slower than flat PHP
 * size: 29 dependencies
-
-> **Note**: Profiling it using blackfire:
->
-> ```
-> blackfire curl 'http://localhost:2503/app.php'
-> ```
->
-> Here's the [grap](https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph):
->
-> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
->
-> Here's the [comparison grap](https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/graph):
->
-> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/62fe59a1-6d18-48ab-87eb-8c52a6fc6ee5...9ddb0d1f-0e70-48a9-a3cf-0be9717126ed/embed"></iframe>
 
 ## Micro Framework Bundle
 
@@ -345,21 +321,6 @@ So to sum up:
 * footprint: 5x slower than flat PHP
 * size: 13 dependencies
 
-> **Note**: Profiling it using blackfire:
->
-> ```
-> blackfire curl 'http://localhost:2504/app.php'
-> ```
->
-> Here's the [grap](https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/graph):
->
-> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
->
-> Here's the [comparison grap](https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/graph):
->
-> <iframe frameborder="0" allowfullscreen src="https://blackfire.io/profiles/compare/9ddb0d1f-0e70-48a9-a3cf-0be9717126ed...e911d287-bda7-4e93-98ca-13165d9db5d3/embed"></iframe>
-
-
 ## Conclusion
 
 Symfony has always been able to be used as a micro framework bundle.
@@ -374,4 +335,4 @@ and [MicroFrameworkBundle](http://github.com/gnugat/micro-framework-bundle) can
 be a viable alternative (they are slimer in term of dependencies and faster).
 
 > **Note**: At the time of writing, MicroFrameworkBundle is still under development
-> (version `0.1.0`). Use it at your own risk and contribute to it :) .
+> (version `0.5.0`). Use it at your own risk and contribute to it :) .
