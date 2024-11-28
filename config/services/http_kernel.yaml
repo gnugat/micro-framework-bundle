@@ -21,7 +21,6 @@ services:
         class: 'Symfony\Component\HttpKernel\Controller\ContainerControllerResolver'
         arguments:
             - '@service_container'
-            - '@logger'
 
     controller_resolver:
         class: 'Symfony\Component\HttpKernel\Controller\ControllerResolver'

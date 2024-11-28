@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.9.3: fixed missing logger
+
+* removed `ContainerControllerResolver`'s dependency on `@logger`
+  (we don't have a logger set up, by default)
+
 ## 0.9.2: autowiring
 
 * added support for autowiring (including Controller as autowired services)
