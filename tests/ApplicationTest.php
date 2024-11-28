@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use tests\Gnugat\MicroFrameworkBundle\App\AppKernel;
+use tests\Gnugat\MicroFrameworkBundle\App\Game\Public\FizzBuzz;
 
 class ApplicationTest extends TestCase
 {
@@ -24,6 +25,17 @@ class ApplicationTest extends TestCase
     {
         $this->kernel = new AppKernel('test', false);
         $this->kernel->boot();
+    }
+
+    #[Test]
+    public function it_can_load_autowired_services(): void
+    {
+        self::assertTrue($this->kernel->getContainer()->has(
+            // FizzBuzz is an autowired service that's marked as public so can be pulled from the container.
+            // It depends on an autowired service that's marked as private.
+            // This should prove that autowiring works.
+            FizzBuzz::class,
+        ));
     }
 
     #[Test]

@@ -1,6 +1,6 @@
 hello_world:
     path: /
     defaults:
-        _controller: 'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller\MyController:helloWorld'
+        _controller: 'tests\Gnugat\MicroFrameworkBundle\CustomBundle\src\Controller\MyController::helloWorld'
     methods:
         - GET

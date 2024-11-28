@@ -18,10 +18,10 @@ services:
         alias: kernel
 
     service_controller_resolver:
-        class: 'Gnugat\MicroFrameworkBundle\Service\ServiceControllerResolver'
+        class: 'Symfony\Component\HttpKernel\Controller\ContainerControllerResolver'
         arguments:
             - '@service_container'
-            - '@controller_resolver'
+            - '@logger'
 
     controller_resolver:
         class: 'Symfony\Component\HttpKernel\Controller\ControllerResolver'

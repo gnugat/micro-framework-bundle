@@ -1,2 +1,22 @@
 imports:
     - { resource: vendors/ }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    tests\Gnugat\MicroFrameworkBundle\App\:
+        resource: '../'
+        exclude:
+            - '../config/'
+            - '../AppKernel.php'
+
+    tests\Gnugat\MicroFrameworkBundle\App\Game\Public\:
+        resource: '../Game/Public'
+        public: true # Making public so we can test they're in the container
+
+    tests\Gnugat\MicroFrameworkBundle\App\Controller\:
+        resource: '../Controller/'
+        public: true
+        tags: ['controller.service_arguments']

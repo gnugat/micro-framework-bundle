@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.2: autowiring
+
+* added support for autowiring (including Controller as autowired services)
+
 ## 0.9.1: routing attributes
 
 * added support for routing attributes (`#[Route()]`)
