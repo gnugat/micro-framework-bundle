@@ -7,11 +7,50 @@ micro-framework which follows the "add what you need" philosophy.
 
 First install it using [Composer](https://getcomposer.org/download):
 
-    composer require gnugat/micro-framework-bundle:^0.9
+```console
+composer require gnugat/micro-framework-bundle:^0.9
+```
 
-Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
+Then enable it in your application, for example by adding it in `config/bundles.php`:
 
-    new Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle()
+```php
+<?php
+
+return [
+    \Gnugat\MicroFrameworkBundle\GnugatMicroFrameworkBundle::class => ['all' => true],
+];
+```
+
+Next, set up autowiring / autoconfigure in `config/services.yaml:
+
+```yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/AppKernel.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        public: true
+        tags: ['controller.service_arguments']
+```
+
+Finally enable Routing Attributes in `config/routings/attributes.yaml`:
+
+```yaml
+controllers:
+    resource:                  
+        path: ../../src/Controller/     
+        namespace: App\Controller       
+    type: attribute
+```
 
 [More information](doc/01-installation.md)
 
@@ -24,6 +63,8 @@ Then enable it in your application's kernel (e.g. `app/AppKernel.php`):
     * small API
     * small footprint for better performance
     * [more information](doc/03-benchmark.md)
+* supports autowiring/autoconfiguration
+* supports Routing Attributes
 
 ## Want to know more?
 
