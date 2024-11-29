@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 09.4: dropped controller methord arguments
+
+* controller methods now can only receive a Request argument
+
 ## 0.9.3: fixed missing logger
 
 * removed `ContainerControllerResolver`'s dependency on `@logger`
