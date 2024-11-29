@@ -36,10 +36,10 @@ services:
             - '../src/Entity/'
             - '../src/AppKernel.php'
 
+    # Controllers have to be marked as "public"
     App\Controller\:
         resource: '../src/Controller/'
         public: true
-        tags: ['controller.service_arguments']
 ```
 
 Finally enable Routing Attributes in `config/routings/attributes.yaml`:
@@ -65,6 +65,7 @@ controllers:
     * [more information](doc/11-benchmark-2024.md)
 * supports autowiring/autoconfiguration
 * supports Routing Attributes
+* there are however some intentional incompatibilities, [more information](doc/20-incompatibility.md)
 
 ## Want to know more?
 

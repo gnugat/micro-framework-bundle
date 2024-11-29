@@ -45,3 +45,7 @@ menu:
         benchmark:
             text: Benchmark
             relativeUrl: doc/11-benchmark-2024.html
+
+        incompatibility:
+            text: Incompatibility
+            relativeUrl: doc/20-incompatibility.html

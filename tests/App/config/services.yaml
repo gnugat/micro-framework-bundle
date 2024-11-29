@@ -19,4 +19,3 @@ services:
     tests\Gnugat\MicroFrameworkBundle\App\Controller\:
         resource: '../Controller/'
         public: true
-        tags: ['controller.service_arguments']
