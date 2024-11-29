@@ -55,6 +55,11 @@
                                         Benchmark
                                     </a>
                                 </li>
+                                                            <li class="">
+                                    <a href="http://gnugat.github.io/micro-framework-bundle/doc/20-incompatibility.html">
+                                        Incompatibility
+                                    </a>
+                                </li>
                                                     </ul>
 
                     </nav>
@@ -86,10 +91,10 @@ return [
             - '../src/Entity/'
             - '../src/AppKernel.php'
 
+    # Controllers have to be marked as "public"
     App\Controller\:
         resource: '../src/Controller/'
-        public: true
-        tags: ['controller.service_arguments']</code></pre>
+        public: true</code></pre>
 <p>Finally enable Routing Attributes in <code>config/routings/attributes.yaml</code>:</p>
 <pre><code class="language-yaml">controllers:
     resource:                  
@@ -110,6 +115,7 @@ return [
 </ul></li>
 <li>supports autowiring/autoconfiguration</li>
 <li>supports Routing Attributes</li>
+<li>there are however some intentional incompatibilities, <a href="doc/20-incompatibility.html">more information</a></li>
 </ul>
 <h2 id="want-to-know-more">Want to know more?</h2>
 <p>You can see the current and past versions using one of the following:</p>

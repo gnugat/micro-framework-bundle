@@ -66,39 +66,45 @@
 
                 
                 <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
-                    <h1 id="how-to-contribute">How to contribute</h1>
-<p>Everybody should be able to help. Here's how you can make this project more
-awesome:</p>
-<ol>
-<li><a href="https://github.com/gnugat/micro-framework-bundle/fork_select">Fork it</a></li>
-<li>improve it</li>
-<li>submit a <a href="https://help.github.com/articles/creating-a-pull-request">pull request</a></li>
-</ol>
-<p>Your work will then be reviewed as soon as possible (suggestions about some
-changes, improvements or alternatives may be given).</p>
-<p>Here's some tips to make you the best contributor ever:</p>
-<ul>
-<li><a href="#tests">Tests</a></li>
-<li><a href="#keeping-your-fork-up-to-date">Keeping your fork up-to-date</a></li>
-</ul>
-<h2 id="tests">Tests</h2>
-<p>Tests can be run using the following script:</p>
-<pre><code>./bin/test.sh</code></pre>
-<p>It simply updates composer dependencies (with an optimized autoloading) and then
-run the PHPUnit test suite.</p>
-<h2 id="keeping-your-fork-up-to-date">Keeping your fork up-to-date</h2>
-<p>To keep your fork up-to-date, you should track the upstream (original) one
-using the following command:</p>
-<pre><code>git remote add upstream https://github.com/gnugat/micro-framework-bundle.git</code></pre>
-<p>Then get the upstream changes:</p>
-<pre><code>git checkout main
-git pull --rebase origin main
-git pull --rebase upstream main
-git checkout &lt;your-branch&gt;
-git rebase main</code></pre>
-<p>Finally, publish your changes:</p>
-<pre><code>git push -f origin &lt;your-branch&gt;</code></pre>
-<p>Your pull request will be automatically updated.</p>
+                    <h1 id="incompatibility">Incompatibility</h1>
+<p>Symfony's official FrameworkBundle offers a couple of features that we have chosen not to implement in this MicroFrameworkBundle,
+at least not out of the box.</p>
+<h2 id="controller-method-arguments">Controller method arguments</h2>
+<p>With the Micro Framework Bundle, your controller actions can only have a <code>Request</code> argument:</p>
+<pre><code class="language-php">&lt;?php
+
+namespace App\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use App\Service\MyService;
+
+class MyController
+{
+    public function __construct(
+        private MyService $myService,
+    ) {
+    }
+
+    #[Route('/my-path', methods: ['GET'], name: self::class)]
+    public function myAction(Request $request): Response
+    {
+        $result = $this-&gt;myService-&gt;doesSometing(
+            $request-&gt;query-&gt;get('query_argument', 'default'),
+        );
+
+        return new Response(json_encode($result), 200, [
+            'Content-Type' =&gt; 'application/json',
+        ]);
+    }
+}</code></pre>
+<p>This is in contrast with Symfony's official Framework Bundle,
+which allows you to either inject services, or route parameters.</p>
+<blockquote>
+<p><strong>Note</strong>: Symfony's official Framework Bundle also provides an <code>AbstractController</code>,
+which provides shortcut methods. There are no such class in the Micro Framework Bundle.</p>
+</blockquote>
                 </section>
 
             </div>
